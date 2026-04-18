@@ -1,0 +1,1256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Empleados Digitales, Sistemas Multiagente y Despliegue</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reset.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/theme/black.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #8a2be2;
+      --secondary: #00f2fe;
+      --bg-dark: #0f172a;
+      --glass-bg: rgba(255, 255, 255, 0.05);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #f59e0b;
+      --green: #22c55e;
+      --red: #ef4444;
+    }
+
+    body {
+      background: radial-gradient(circle at center, #1e293b 0%, var(--bg-dark) 100%);
+      font-family: 'Inter', sans-serif;
+    }
+
+    .reveal { font-family: 'Inter', sans-serif; color: var(--text-main); }
+
+    .reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+
+    .text-gradient {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .text-gradient-amber {
+      background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .text-gradient-green {
+      background: linear-gradient(135deg, #22c55e 0%, #00f2fe 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      margin: 1rem auto;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.15);
+    }
+
+    .glass-pill {
+      background: rgba(138, 43, 226, 0.2);
+      border: 1px solid rgba(138, 43, 226, 0.4);
+      color: #e2cbff;
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-bottom: 1rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .glass-pill.cyan {
+      background: rgba(0, 242, 254, 0.1);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      color: var(--secondary);
+    }
+
+    .glass-pill.green {
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      color: #86efac;
+    }
+
+    .glass-pill.amber {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1px solid rgba(245, 158, 11, 0.4);
+      color: #fcd34d;
+    }
+
+    .glass-pill.red {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.2rem;
+    }
+
+    .stat-number { font-size: 3.2rem; font-weight: 800; line-height: 1; margin-bottom: 0.4rem; }
+    .stat-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 400; }
+
+    .reveal ul.premium-list { list-style: none; padding: 0; margin: 0; }
+    .reveal ul.premium-list li {
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: flex-start;
+      line-height: 1.4;
+    }
+    .reveal ul.premium-list li i {
+      color: var(--secondary);
+      margin-right: 0.8rem;
+      margin-top: 0.2rem;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+
+    .reveal pre.glass-code {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 1.2rem 1.5rem;
+      font-size: 0.88rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+      line-height: 1.6;
+      text-align: left;
+    }
+
+    .highlight-box {
+      border-left: 4px solid var(--primary);
+      padding: 0.8rem 1rem 0.8rem 1.5rem;
+      background: rgba(138, 43, 226, 0.08);
+      margin: 1rem 0;
+      border-radius: 0 12px 12px 0;
+      text-align: left;
+    }
+
+    .highlight-box.cyan { border-left-color: var(--secondary); background: rgba(0,242,254,0.06); }
+    .highlight-box.amber { border-left-color: var(--accent); background: rgba(245,158,11,0.08); }
+    .highlight-box.green { border-left-color: var(--green); background: rgba(34,197,94,0.08); }
+    .highlight-box.red { border-left-color: var(--red); background: rgba(239,68,68,0.08); }
+
+    .reveal table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--glass-border);
+    }
+    .reveal table th {
+      background: rgba(255,255,255,0.1);
+      padding: 0.8rem 1rem;
+      font-size: 1.05rem;
+      text-align: left;
+      color: var(--secondary);
+    }
+    .reveal table td {
+      padding: 0.8rem 1rem;
+      border-top: 1px solid var(--glass-border);
+      font-size: 0.95rem;
+      text-align: left;
+    }
+
+    .step-flow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      margin: 1.5rem 0;
+      flex-wrap: wrap;
+    }
+
+    .step-node {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 12px;
+      padding: 0.8rem 1rem;
+      font-size: 0.85rem;
+      text-align: center;
+      min-width: 130px;
+    }
+
+    .step-node.primary { border-color: var(--primary); background: rgba(138,43,226,0.1); }
+    .step-node.cyan { border-color: var(--secondary); background: rgba(0,242,254,0.1); }
+    .step-node.amber { border-color: var(--accent); background: rgba(245,158,11,0.1); }
+    .step-node.green { border-color: var(--green); background: rgba(34,197,94,0.1); }
+
+    .step-arrow {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+    }
+
+    .reveal section img { border-radius: 12px; }
+
+    .reveal ::selection { background: var(--primary); color: white; }
+    .reveal ::-moz-selection { background: var(--primary); color: white; }
+
+    .footer-credit {
+      position: absolute;
+      bottom: 12px;
+      right: 20px;
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      opacity: 0.6;
+    }
+
+    .agent-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 16px;
+      padding: 1rem;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .agent-card:hover { transform: translateY(-4px); }
+
+    .agent-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 0.6rem;
+      font-size: 1.3rem;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- PORTADA                                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <span class="glass-pill"><i class="fa-solid fa-users-gear"></i> PROGRAMA AGENTIC · CLASE 3</span>
+  <h1 style="font-size:3.2rem; margin-bottom:1rem;">Empleados Digitales,<br><span class="text-gradient">Sistemas Multiagente</span><br>y Despliegue</h1>
+  <p style="font-size:1.2rem; color:var(--text-muted); max-width:850px; margin:0 auto 2rem;">
+    De un asistente individual a un <strong style="color:var(--secondary);">crew de agentes autónomos</strong> que colaboran, se despliegan y se monitorean desde un centro de comando.
+  </p>
+  <div style="margin-top:2rem; display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap;">
+    <span class="glass-pill cyan" style="margin:0;"><i class="fa-solid fa-cubes"></i> Antigravity · Cowork</span>
+    <span class="glass-pill"><i class="fa-solid fa-plug"></i> MCP</span>
+    <span class="glass-pill green"><i class="fa-solid fa-brain"></i> Skills</span>
+    <span class="glass-pill amber"><i class="fa-solid fa-diagram-project"></i> n8n multiagente</span>
+    <span class="glass-pill cyan"><i class="fa-solid fa-bolt"></i> v0 · Vercel</span>
+  </div>
+  <p style="margin-top:2.5rem; font-size:0.9rem; color:var(--text-muted);">
+    Axel Laban Arzubi · eCommerce Institute · 1 hora
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- HOJA DE RUTA                                                   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <span class="glass-pill cyan"><i class="fa-solid fa-map"></i> Hoja de Ruta · 1 h</span>
+  <h2>Los 7 bloques de <span class="text-gradient">hoy</span></h2>
+  <div style="max-width:1100px; margin:1rem auto;">
+    <table style="font-size:0.92rem;">
+      <tr><td><span class="glass-pill" style="margin:0; font-size:0.75rem;">BLOQUE 0</span></td><td><strong>Puente desde Clase 2:</strong> de asistente individual a crew. Por qué multiagente cambia todo.</td><td style="text-align:center; color:var(--text-muted);">5 min</td></tr>
+      <tr><td><span class="glass-pill cyan" style="margin:0; font-size:0.75rem;">BLOQUE 1</span></td><td><strong>El motor avanzado:</strong> Antigravity · Cowork · Claude Code. Cuándo cada uno.</td><td style="text-align:center; color:var(--text-muted);">10 min</td></tr>
+      <tr><td><span class="glass-pill cyan" style="margin:0; font-size:0.75rem;">BLOQUE 2</span></td><td><strong>MCP — el USB-C para AI:</strong> conectar tus agentes a Calendar, Drive, Notion.</td><td style="text-align:center; color:var(--text-muted);">8 min</td></tr>
+      <tr><td><span class="glass-pill cyan" style="margin:0; font-size:0.75rem;">BLOQUE 3</span></td><td><strong>Skills — empleados digitales cargables:</strong> anatomía + 3 casos reales.</td><td style="text-align:center; color:var(--text-muted);">8 min</td></tr>
+      <tr><td><span class="glass-pill amber" style="margin:0; font-size:0.75rem;">BLOQUE 4</span></td><td><strong>⚙️ Live Build 1 · Meeting Prep Agent:</strong> Cowork + NotebookLM + Calendar MCP + Dashboard v0.</td><td style="text-align:center; color:var(--accent);">15 min</td></tr>
+      <tr><td><span class="glass-pill amber" style="margin:0; font-size:0.75rem;">BLOQUE 5</span></td><td><strong>⚙️ Live Build 2 · Editor Jefe + Curador:</strong> multiagente n8n con handoff Email / Telegram.</td><td style="text-align:center; color:var(--accent);">10 min</td></tr>
+      <tr><td><span class="glass-pill green" style="margin:0; font-size:0.75rem;">BLOQUE 6</span></td><td><strong>Cierre:</strong> costos reales · Managed Agents · entregables · próximos pasos.</td><td style="text-align:center; color:var(--green);">4 min</td></tr>
+    </table>
+  </div>
+  <p style="font-size:0.85rem; color:var(--text-muted); margin-top:1rem;">
+    60 min · Menos teoría, más hands-on. Te vas con 2 flujos funcionando y 3 skills en tu librería.
+  </p>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 0 · 5 min — PUENTE DESDE CLASE 2                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill"><i class="fa-solid fa-bridge"></i> BLOQUE 0 · 5 MIN</span>
+    <h2>De un <span class="text-gradient">asistente</span> a un <span class="text-gradient-amber">equipo</span></h2>
+    <p style="font-size:1.15rem; color:var(--text-muted); max-width:900px; margin:0 auto 1.5rem;">
+      En la Clase 2 construimos <strong style="color:var(--text-main);">Indio</strong> — un agente con RAG, HITL y personalidad. Hoy damos el salto: <strong style="color:var(--secondary);">un equipo de empleados digitales</strong> que colaboran entre sí, se despliegan en la nube y reportan a un dashboard.
+    </p>
+    <div class="grid-2" style="max-width:1050px; gap:1.5rem; margin-top:1rem;">
+      <div class="glass-card" style="border-top:4px solid var(--text-muted); padding:1.3rem;">
+        <h4 style="color:var(--text-muted); margin-bottom:0.6rem;"><i class="fa-solid fa-user"></i> CLASE 2 · Asistente individual</h4>
+        <ul class="premium-list" style="font-size:0.88rem;">
+          <li><i class="fa-solid fa-robot"></i> 1 agente + 1 canal + 1 base de conocimiento</li>
+          <li><i class="fa-solid fa-comments"></i> Reactivo: responde cuando le hablan</li>
+          <li><i class="fa-solid fa-user-check"></i> HITL puntual: escala cuando duda</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="border-top:4px solid var(--secondary); padding:1.3rem;">
+        <h4 style="color:var(--secondary); margin-bottom:0.6rem;"><i class="fa-solid fa-users-gear"></i> CLASE 3 · Crew autónomo</h4>
+        <ul class="premium-list" style="font-size:0.88rem;">
+          <li><i class="fa-solid fa-network-wired"></i> N agentes especializados + orquestador</li>
+          <li><i class="fa-solid fa-clock-rotate-left"></i> Proactivo: corre programado en la nube</li>
+          <li><i class="fa-solid fa-gauge-high"></i> Dashboard: un humano supervisa a todos</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:1.2rem auto 0; font-size:0.95rem;">
+      <strong>La regla mental del día:</strong> si un proceso requiere más de una habilidad distinta (investigar + redactar + decidir), un solo agente genérico pierde. Un crew de especialistas gana.
+    </div>
+  </section>
+
+  <section>
+    <h3>Por qué multiagente <span class="text-gradient">funciona</span> — y cuándo <span class="text-gradient-amber">no conviene</span></h3>
+    <div class="grid-3" style="max-width:1100px; margin:1rem auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.2rem; text-align:center; border-top:4px solid var(--green);">
+        <div class="stat-number" style="color:var(--green);">+90%</div>
+        <div class="stat-label">Mejor performance que single-agent en tareas complejas <em style="font-size:0.75rem;">(research Anthropic, 2025)</em></div>
+      </div>
+      <div class="glass-card" style="padding:1.2rem; text-align:center; border-top:4px solid var(--red);">
+        <div class="stat-number" style="color:var(--red);">15×</div>
+        <div class="stat-label">Más tokens consumidos por tarea. El 80% del costo va ahí.</div>
+      </div>
+      <div class="glass-card" style="padding:1.2rem; text-align:center; border-top:4px solid var(--accent);">
+        <div class="stat-number" style="color:var(--accent);">10K+</div>
+        <div class="stat-label">Servers MCP públicos en producción. Es el estándar de facto.</div>
+      </div>
+    </div>
+    <div class="highlight-box amber" style="max-width:1050px; margin:1rem auto 0; font-size:0.92rem;">
+      <strong>⚠️ La trampa del multiagente:</strong> usarlo cuando un solo agente con un buen prompt alcanza. No todo proceso necesita un crew. La pregunta antes de diseñar: <em>"¿realmente este problema se beneficia de especialización o solo quiero sentirme inteligente?"</em>
+    </div>
+  </section>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 1 · 10 min — EL MOTOR AVANZADO                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill cyan"><i class="fa-solid fa-gears"></i> BLOQUE 1 · 10 MIN</span>
+    <h2>El motor avanzado: <span class="text-gradient">3 entornos</span> para construir con agentes</h2>
+    <p style="font-size:1.1rem; color:var(--text-muted); max-width:900px; margin:0 auto 1.2rem;">
+      En 2026, el IDE dejó de ser un editor de texto. Es el <strong style="color:var(--secondary);">centro de comando de agentes autónomos</strong>. Estos son los tres entornos que importan según tu rol.
+    </p>
+    <div class="grid-3" style="max-width:1150px; margin:0 auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--secondary);">
+        <h4 style="color:var(--secondary); margin-bottom:0.6rem; font-size:1.05rem;"><i class="fa-brands fa-google"></i> Antigravity</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.8rem;">IDE agentic de Google (Nov 2025). Fork de VS Code. Gratis en preview.</p>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-check"></i> <strong>Manager View:</strong> orquestá múltiples agentes en paralelo</li>
+          <li><i class="fa-solid fa-check"></i> Claude Opus 4.6 + Gemini 3 Pro incluidos</li>
+          <li><i class="fa-solid fa-check"></i> Artifacts: planes, screenshots, grabaciones</li>
+        </ul>
+        <div style="margin-top:0.7rem; font-size:0.78rem; color:var(--accent);">
+          🎯 <strong>Para:</strong> proyectos complejos · paralelismo real
+        </div>
+      </div>
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--primary);">
+        <h4 style="color:#e2cbff; margin-bottom:0.6rem; font-size:1.05rem;"><i class="fa-solid fa-sparkles"></i> Claude Cowork</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.8rem;">Agente de escritorio de Anthropic. GA en Abril 2026. Sin terminal.</p>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-check"></i> Acceso a carpetas locales + Chrome</li>
+          <li><i class="fa-solid fa-check"></i> <strong>Tareas programadas:</strong> corre solo en background</li>
+          <li><i class="fa-solid fa-check"></i> MCP nativo + Skills nativos</li>
+        </ul>
+        <div style="margin-top:0.7rem; font-size:0.78rem; color:var(--accent);">
+          🎯 <strong>Para:</strong> no-técnicos · automatizar tu computadora
+        </div>
+      </div>
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--accent);">
+        <h4 style="color:var(--accent); margin-bottom:0.6rem; font-size:1.05rem;"><i class="fa-solid fa-terminal"></i> Claude Code</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin-bottom:0.8rem;">CLI agentic de Anthropic. Para terminal-natives. La base de Cowork.</p>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-check"></i> Control total · script-able</li>
+          <li><i class="fa-solid fa-check"></i> Plugins + Skills + Hooks</li>
+          <li><i class="fa-solid fa-check"></i> Dispatch remoto desde teléfono</li>
+        </ul>
+        <div style="margin-top:0.7rem; font-size:0.78rem; color:var(--accent);">
+          🎯 <strong>Para:</strong> devs · pipelines · CI/CD
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>¿Cuál usás vos? <span class="text-gradient">Decisión en 3 preguntas</span></h3>
+    <table style="max-width:1050px; margin:1.2rem auto; font-size:0.92rem;">
+      <tr>
+        <th style="width:28%;">¿Tu perfil es...?</th>
+        <th style="width:30%;">Tu entorno</th>
+        <th style="width:42%;">Por qué</th>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--text-main);">No-técnico / Operador</strong><br><span style="color:var(--text-muted); font-size:0.82rem;">Marketing, finanzas, ops</span></td>
+        <td><span class="glass-pill" style="margin:0; font-size:0.75rem;">COWORK</span></td>
+        <td>UI de chat familiar. Corre tareas sobre tus archivos locales, tu Chrome y tu Gmail. Se agenda. <em>Pro o superior.</em></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--text-main);">Builder / Semi-técnico</strong><br><span style="color:var(--text-muted); font-size:0.82rem;">PM técnico, founder, consultor</span></td>
+        <td><span class="glass-pill cyan" style="margin:0; font-size:0.75rem;">ANTIGRAVITY</span></td>
+        <td>Manager View es ideal para ver múltiples agentes trabajando en paralelo sobre tu código o tu contenido. Gratis.</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--text-main);">Developer / DevOps</strong><br><span style="color:var(--text-muted); font-size:0.82rem;">Ingeniería, automatización CI</span></td>
+        <td><span class="glass-pill amber" style="margin:0; font-size:0.75rem;">CLAUDE CODE</span></td>
+        <td>Terminal + scripts + plugins. Lo que corre en tu laptop también corre en tu GitHub Action.</td>
+      </tr>
+    </table>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:0.8rem auto 0; font-size:0.92rem;">
+      <strong>💡 Realidad 2026:</strong> no es excluyente. Un equipo maduro tiene Cowork para operadores, Antigravity para builders y Claude Code para developers — todos compartiendo las mismas <strong>Skills</strong> y los mismos <strong>servers MCP</strong>.
+    </div>
+  </section>
+
+  <section>
+    <h3>La pirámide del <span class="text-gradient">trabajo agéntico</span></h3>
+    <p style="font-size:1rem; color:var(--text-muted); max-width:900px; margin:0 auto 1rem;">
+      Tres capas que hoy entendés — y una cuarta que sumamos esta clase.
+    </p>
+    <div class="grid-2" style="max-width:1100px; margin:0 auto; gap:1.5rem; align-items:stretch;">
+      <div>
+        <div class="glass-card" style="padding:0.9rem 1.3rem; margin-bottom:0.6rem; border-left:4px solid var(--text-muted);">
+          <h4 style="font-size:0.95rem; margin:0; color:var(--text-muted);">1. Automatización simple</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin:0.2rem 0 0;">Zapier, Make. Si X → entonces Y. Determinístico.</p>
+        </div>
+        <div class="glass-card" style="padding:0.9rem 1.3rem; margin-bottom:0.6rem; border-left:4px solid var(--secondary);">
+          <h4 style="font-size:0.95rem; margin:0; color:var(--secondary);">2. Automatización con LLM</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin:0.2rem 0 0;">n8n + AI Agent node. El LLM decide qué hacer en un paso.</p>
+        </div>
+        <div class="glass-card" style="padding:0.9rem 1.3rem; margin-bottom:0.6rem; border-left:4px solid var(--primary);">
+          <h4 style="font-size:0.95rem; margin:0; color:#e2cbff;">3. Agente de AI</h4>
+          <p style="font-size:0.82rem; color:var(--text-muted); margin:0.2rem 0 0;">Un LLM con memoria + tools + RAG + HITL. <em>(Clase 2 · Indio)</em></p>
+        </div>
+        <div class="glass-card" style="padding:0.9rem 1.3rem; border-left:4px solid var(--accent); background:rgba(245,158,11,0.08);">
+          <h4 style="font-size:0.95rem; margin:0; color:var(--accent);">4. Sistema multiagente</h4>
+          <p style="font-size:0.82rem; color:var(--text-main); margin:0.2rem 0 0;"><strong>Varios agentes especializados</strong> + orquestador + MCP + Skills. <em>(Clase 3 · hoy)</em></p>
+        </div>
+      </div>
+      <div class="glass-card" style="padding:1.5rem; border:2px solid var(--accent);">
+        <h4 style="color:var(--accent); margin-bottom:0.8rem;"><i class="fa-solid fa-lightbulb"></i> Lo nuevo del nivel 4</h4>
+        <ul class="premium-list" style="font-size:0.9rem;">
+          <li><i class="fa-solid fa-users" style="color:var(--accent);"></i> <strong>Especialización:</strong> cada agente tiene rol, tools y personalidad</li>
+          <li><i class="fa-solid fa-shuffle" style="color:var(--accent);"></i> <strong>Handoff:</strong> un agente le pasa trabajo a otro</li>
+          <li><i class="fa-solid fa-plug" style="color:var(--accent);"></i> <strong>MCP:</strong> todos los agentes comparten el mismo stack de tools</li>
+          <li><i class="fa-solid fa-gauge" style="color:var(--accent);"></i> <strong>Dashboard:</strong> un humano ve a todos al mismo tiempo</li>
+          <li><i class="fa-solid fa-clock" style="color:var(--accent);"></i> <strong>Proactividad:</strong> no esperan a que les hables — corren solos</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 2 · 8 min — MCP                                          -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill cyan"><i class="fa-solid fa-plug"></i> BLOQUE 2 · 8 MIN</span>
+    <h2>MCP — el <span class="text-gradient">USB-C para AI</span></h2>
+    <div class="grid-2" style="max-width:1100px; margin:1rem auto; align-items:center;">
+      <div style="text-align:left;">
+        <p style="font-size:1.05rem; color:var(--text-main); margin-bottom:1rem;">
+          <strong>Antes de MCP:</strong> cada LLM tenía su propia forma de conectarse a cada herramienta. Si querías conectar Claude a Google Drive, escribías un connector. Y para ChatGPT, otro. Y para Gemini, otro.
+        </p>
+        <p style="font-size:1.05rem; color:var(--text-main);">
+          <strong style="color:var(--secondary);">Con MCP:</strong> un único protocolo. Un server MCP de Drive funciona con <strong>todos</strong> los LLMs. Un único estándar.
+        </p>
+      </div>
+      <div class="glass-card" style="padding:1.3rem;">
+        <h4 style="color:var(--secondary); margin-bottom:0.8rem; font-size:1rem;"><i class="fa-solid fa-book"></i> Ficha técnica</h4>
+        <ul class="premium-list" style="font-size:0.85rem;">
+          <li><i class="fa-solid fa-calendar"></i> Lanzado por Anthropic en Nov 2024</li>
+          <li><i class="fa-solid fa-handshake"></i> Donado al Linux Foundation en Dic 2025</li>
+          <li><i class="fa-solid fa-globe"></i> Adoptado por OpenAI, Google, Microsoft, AWS</li>
+          <li><i class="fa-solid fa-server"></i> +10.000 servers MCP públicos activos</li>
+          <li><i class="fa-solid fa-code-fork"></i> Open source · basado en JSON-RPC 2.0</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:0.5rem auto 0; font-size:0.95rem;">
+      <strong>💡 La analogía:</strong> USB-C no es el dispositivo, es el conector. Antes cada cable era diferente. Hoy todos los dispositivos usan el mismo. MCP hizo lo mismo con las tools que usan los agentes.
+    </div>
+  </section>
+
+  <section>
+    <h3>Cómo se <span class="text-gradient">conecta</span> un MCP</h3>
+    <div class="step-flow" style="margin:1.5rem 0;">
+      <div class="step-node primary">
+        <strong>Tu agente</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Claude, Cowork, Cursor, n8n...</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right-arrow-left"></i></span>
+      <div class="step-node cyan">
+        <strong>Protocolo MCP</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">JSON-RPC 2.0</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right-arrow-left"></i></span>
+      <div class="step-node amber">
+        <strong>Server MCP</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Calendar, Drive, Notion...</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right-arrow-left"></i></span>
+      <div class="step-node green">
+        <strong>API real</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Google, Notion, GitHub...</span>
+      </div>
+    </div>
+    <p style="font-size:0.95rem; color:var(--text-muted); max-width:950px; margin:1rem auto;">
+      El server MCP <strong>expone tools</strong> (lista de acciones que el agente puede usar) y <strong>resources</strong> (datos que puede leer). El agente descubre qué hay disponible en runtime — no hardcodeás nada.
+    </p>
+    <pre class="glass-code" style="max-width:1050px; font-size:0.82rem; margin-top:1rem;">
+<code style="color:#f8fafc;"><span style="color:#94a3b8;"># Cowork · agregar un server MCP de Notion</span>
+<span style="color:#00f2fe;">Settings → Connectors → Add MCP Server</span>
+  name: <span style="color:#fcd34d;">"Notion"</span>
+  url:  <span style="color:#fcd34d;">"https://mcp.notion.com/mcp"</span>
+  auth: <span style="color:#fcd34d;">OAuth</span>
+
+<span style="color:#94a3b8;"># A partir de ahora el agente tiene acceso a:</span>
+<span style="color:#86efac;">→ search_pages, get_page, create_page, update_page, ...</span>
+<span style="color:#86efac;">→ sin escribir una línea de código</span></code></pre>
+  </section>
+
+  <section>
+    <h3>Los MCP que uso todos los días</h3>
+    <table style="max-width:1100px; margin:1rem auto; font-size:0.88rem;">
+      <tr>
+        <th style="width:22%;">MCP</th>
+        <th style="width:28%;">Qué hace</th>
+        <th style="width:25%;">Dónde lo uso</th>
+        <th style="width:25%;">URL / install</th>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Google Calendar</strong></td>
+        <td>Lee eventos, crea reuniones, responde invitaciones</td>
+        <td>Meeting Prep Agent (live build 1)</td>
+        <td><span style="font-size:0.78rem; color:var(--text-muted);">MCP directory → Google</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Google Drive</strong></td>
+        <td>Busca documentos, lee contenido, crea archivos</td>
+        <td>Research + briefings automáticos</td>
+        <td><span style="font-size:0.78rem; color:var(--text-muted);">MCP directory → Google</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Notion</strong></td>
+        <td>Consulta bases, crea páginas, escribe en tu wiki</td>
+        <td>Base de conocimiento del equipo</td>
+        <td><span style="font-size:0.78rem; color:var(--text-muted);">mcp.notion.com</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">GitHub</strong></td>
+        <td>PRs, issues, búsqueda en código</td>
+        <td>Review asistido + alertas</td>
+        <td><span style="font-size:0.78rem; color:var(--text-muted);">github/github-mcp-server</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Filesystem</strong></td>
+        <td>Lee y escribe archivos locales</td>
+        <td>Cowork + procesamiento batch</td>
+        <td><span style="font-size:0.78rem; color:var(--text-muted);">server-filesystem (oficial)</span></td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">NotebookLM</strong></td>
+        <td>Consulta notebooks como fuente RAG</td>
+        <td>Scoring leads + research consistente</td>
+        <td><span style="font-size:0.78rem; color:var(--text-muted);">Comunitario (repo en recursos)</span></td>
+      </tr>
+    </table>
+    <div class="highlight-box amber" style="max-width:1050px; margin:1rem auto 0; font-size:0.92rem;">
+      <strong>⚠️ Seguridad:</strong> cada MCP corre con permisos. <em>Read-only por default.</em> Si el agente puede escribir (crear archivos, mandar emails, publicar posts) hay que decidirlo explícitamente. Prompt injection vía MCP es un riesgo real documentado.
+    </div>
+  </section>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 3 · 8 min — SKILLS                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill cyan"><i class="fa-solid fa-brain"></i> BLOQUE 3 · 8 MIN</span>
+    <h2>Skills — <span class="text-gradient">empleados digitales cargables</span></h2>
+    <p style="font-size:1.1rem; color:var(--text-muted); max-width:900px; margin:0 auto 1.2rem;">
+      Una Skill es <strong style="color:var(--secondary);">una carpeta</strong> con instrucciones, scripts y ejemplos que Claude <em>carga sola cuando la necesita</em>. No vos.
+    </p>
+    <div class="grid-2" style="max-width:1100px; margin:0 auto; gap:1.5rem;">
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--red);">
+        <h4 style="color:var(--red); margin-bottom:0.7rem;">❌ Prompt monolítico</h4>
+        <ul class="premium-list" style="font-size:0.88rem;">
+          <li><i class="fa-solid fa-xmark" style="color:var(--red);"></i> Todo en un System Prompt de 3.000 palabras</li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--red);"></i> El 90% de la info se carga <strong>siempre</strong>, aunque no se use</li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--red);"></i> Actualizar una parte rompe el resto</li>
+          <li><i class="fa-solid fa-xmark" style="color:var(--red);"></i> No podés compartirlo con tu equipo sin copy-paste</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--green);">
+        <h4 style="color:var(--green); margin-bottom:0.7rem;">✅ Skills modulares</h4>
+        <ul class="premium-list" style="font-size:0.88rem;">
+          <li><i class="fa-solid fa-check" style="color:var(--green);"></i> Cada skill es una carpeta independiente</li>
+          <li><i class="fa-solid fa-check" style="color:var(--green);"></i> <strong>Model-invoked:</strong> Claude decide cuándo cargarla</li>
+          <li><i class="fa-solid fa-check" style="color:var(--green);"></i> Versionables, compartibles, open-source</li>
+          <li><i class="fa-solid fa-check" style="color:var(--green);"></i> Estándar abierto (agentskills.io · Dic 2025)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:1.2rem auto 0; font-size:0.92rem;">
+      <strong>💡 La mentalidad que cambia todo:</strong> parás de escribir un prompt "maestro" que hace todo. Empezás a construir una <strong>librería de habilidades</strong> que Claude mezcla según el problema que recibe.
+    </div>
+  </section>
+
+  <section>
+    <h3>Anatomía de una Skill</h3>
+    <pre class="glass-code" style="max-width:1050px; font-size:0.85rem;">
+<code style="color:#f8fafc;"><span style="color:#94a3b8;"># Estructura mínima de cualquier skill</span>
+mi-skill/
+├── <span style="color:#00f2fe;">SKILL.md</span>          <span style="color:#94a3b8;"># obligatorio — instrucciones + metadata</span>
+├── scripts/            <span style="color:#94a3b8;"># opcional — ejecutables auxiliares</span>
+│   └── helper.py
+└── resources/          <span style="color:#94a3b8;"># opcional — plantillas, ejemplos</span>
+    └── template.docx
+
+<span style="color:#94a3b8;"># Contenido del SKILL.md</span>
+<span style="color:#fcd34d;">---</span>
+<span style="color:#e2cbff;">name:</span> scoring-leads-notebooklm
+<span style="color:#e2cbff;">description:</span> <span style="color:#86efac;">"Puntúa un lead nuevo cruzando datos del CRM contra
+  criterios históricos de cierre. Usar cuando llega un lead nuevo y hay
+  que decidir prioridad de contacto."</span>
+<span style="color:#fcd34d;">---</span>
+
+<span style="color:#94a3b8;"># Scoring de leads — v1.2</span>
+Cuando recibas un lead:
+1. Leé sus datos desde el CRM (tool: notion_query)
+2. Compará contra el notebook 'Historico Cierres 2025' (tool: notebooklm_query)
+3. Devolvé un score 0-100 + razones + próxima acción recomendada
+...</code></pre>
+    <div class="highlight-box amber" style="max-width:1050px; margin:0.8rem auto 0; font-size:0.9rem;">
+      <strong>⚡ Clave técnica:</strong> el <code style="background:rgba(0,0,0,0.3);padding:0.15rem 0.4rem;border-radius:4px;">description</code> es el <em>trigger</em>. Claude escanea las descripciones de todas tus skills y carga solo las relevantes al contexto actual. Una buena descripción = skill que se usa. Una mala = skill que duerme.
+    </div>
+  </section>
+
+  <section>
+    <h3>Las 3 skills que te llevás hoy</h3>
+    <div class="grid-3" style="max-width:1200px; margin:0.8rem auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.2rem; text-align:left; border-top:4px solid var(--secondary);">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#00f2fe,#8a2be2);"><i class="fa-solid fa-chart-line"></i></div>
+        <h4 style="color:var(--secondary); margin-bottom:0.5rem; font-size:1rem; text-align:center;">Scoring de Leads</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.7rem;">
+          Prompt maestro en NotebookLM. Cruza leads nuevos contra histórico de cierres y devuelve score + razones + próxima acción.
+        </p>
+        <p style="font-size:0.78rem; color:var(--accent); margin:0;">
+          <strong>Usa:</strong> NotebookLM como fuente de verdad + reglas de negocio tuyas.
+        </p>
+      </div>
+      <div class="glass-card" style="padding:1.2rem; text-align:left; border-top:4px solid var(--primary);">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#8a2be2,#f59e0b);"><i class="fa-solid fa-users"></i></div>
+        <h4 style="color:#e2cbff; margin-bottom:0.5rem; font-size:1rem; text-align:center;">Super Marketing Team</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.7rem;">
+          1 orquestador + 5 skills-expertos: <strong>Hormozi · Ogilvy · Gary Vee · Brunson · Sabri Suby</strong>. Cada uno con su voz y sus frameworks.
+        </p>
+        <p style="font-size:0.78rem; color:var(--accent); margin:0;">
+          <strong>Usa:</strong> bootcamp, auditoría, brainstorming de campañas.
+        </p>
+      </div>
+      <div class="glass-card" style="padding:1.2rem; text-align:left; border-top:4px solid var(--accent);">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#f59e0b,#22c55e);"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+        <h4 style="color:var(--accent); margin-bottom:0.5rem; font-size:1rem; text-align:center;">Skill-Creator</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); line-height:1.5; margin-bottom:0.7rem;">
+          La meta-skill. Le pedís <em>"creame una skill para X"</em> y te arma la estructura, el SKILL.md, los scripts y los ejemplos. <strong>Oficial de Anthropic.</strong>
+        </p>
+        <p style="font-size:0.78rem; color:var(--accent); margin:0;">
+          <strong>Usa:</strong> construir tu librería sin tocar YAML.
+        </p>
+      </div>
+    </div>
+    <div class="highlight-box green" style="max-width:1050px; margin:0.8rem auto 0; font-size:0.9rem;">
+      <strong>🎯 La estrategia que te propongo:</strong> en vez de 1 agente gigante, armate una <strong>librería personal de 10-15 skills</strong> que cubran tus tareas reales. Cada skill es un "empleado digital" que vive en tu carpeta y se activa cuando Claude la necesita.
+    </div>
+  </section>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 4 · 15 min — LIVE BUILD 1: MEETING PREP AGENT           -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill amber"><i class="fa-solid fa-wrench"></i> BLOQUE 4 · 15 MIN · LIVE BUILD 1</span>
+    <h2>Meeting Prep Agent</h2>
+    <p style="font-size:1.1rem; color:var(--text-muted); max-width:900px; margin:0.5rem auto 1.2rem;">
+      Todos los días a las <strong style="color:var(--secondary);">7 AM</strong>, un agente lee tu Calendar, investiga a cada participante de tus reuniones, y te deja un <strong>briefing ejecutivo</strong> esperándote en un dashboard. 5 minutos antes del call, ya sabés quién es cada uno.
+    </p>
+    <div class="grid-4" style="max-width:1200px; margin:0 auto;">
+      <div class="glass-card" style="padding:1rem; text-align:center; border-top:4px solid var(--primary);">
+        <h4 style="color:#e2cbff; font-size:0.85rem; margin-bottom:0.3rem;"><i class="fa-solid fa-sparkles"></i> Orquestador</h4>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">Claude Cowork (tareas programadas)</p>
+      </div>
+      <div class="glass-card" style="padding:1rem; text-align:center; border-top:4px solid var(--secondary);">
+        <h4 style="color:var(--secondary); font-size:0.85rem; margin-bottom:0.3rem;"><i class="fa-solid fa-plug"></i> Tools</h4>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">MCP Calendar + Drive + Web Search</p>
+      </div>
+      <div class="glass-card" style="padding:1rem; text-align:center; border-top:4px solid var(--accent);">
+        <h4 style="color:var(--accent); font-size:0.85rem; margin-bottom:0.3rem;"><i class="fa-solid fa-book"></i> RAG</h4>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">NotebookLM (contexto tuyo / empresa)</p>
+      </div>
+      <div class="glass-card" style="padding:1rem; text-align:center; border-top:4px solid var(--green);">
+        <h4 style="color:var(--green); font-size:0.85rem; margin-bottom:0.3rem;"><i class="fa-solid fa-display"></i> Output</h4>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">Dashboard en v0 + Vercel</p>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:1rem auto 0; font-size:0.92rem;">
+      <strong>🎯 El valor:</strong> dejás de perder 10-15 minutos antes de cada reunión googleando a la gente. Pasás a ser <em>el que siempre llega preparado</em> sin hacer el trabajo.
+    </div>
+  </section>
+
+  <section>
+    <h3>Arquitectura del agente</h3>
+    <div class="step-flow" style="margin:1rem 0 1.2rem;">
+      <div class="step-node primary">
+        <i class="fa-solid fa-clock" style="color:#e2cbff;"></i><br>
+        <strong>1. Trigger</strong><br>
+        <span style="font-size:0.72rem; color:var(--text-muted);">Cron 07:00</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <div class="step-node cyan">
+        <i class="fa-solid fa-calendar" style="color:var(--secondary);"></i><br>
+        <strong>2. Calendar</strong><br>
+        <span style="font-size:0.72rem; color:var(--text-muted);">MCP Calendar<br>lee meetings hoy</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <div class="step-node amber">
+        <i class="fa-solid fa-magnifying-glass" style="color:var(--accent);"></i><br>
+        <strong>3. Research</strong><br>
+        <span style="font-size:0.72rem; color:var(--text-muted);">Web + LinkedIn<br>por cada participante</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <div class="step-node primary">
+        <i class="fa-solid fa-brain" style="color:#e2cbff;"></i><br>
+        <strong>4. Contexto</strong><br>
+        <span style="font-size:0.72rem; color:var(--text-muted);">NotebookLM:<br>historial empresa</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <div class="step-node green">
+        <i class="fa-solid fa-file-lines" style="color:var(--green);"></i><br>
+        <strong>5. Briefing</strong><br>
+        <span style="font-size:0.72rem; color:var(--text-muted);">Publica JSON<br>al dashboard</span>
+      </div>
+    </div>
+    <div class="grid-2" style="max-width:1100px; margin:0 auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.1rem;">
+        <h4 style="color:var(--secondary); margin-bottom:0.6rem; font-size:0.95rem;"><i class="fa-solid fa-list-check"></i> Qué hace en cada meeting</h4>
+        <ul class="premium-list" style="font-size:0.85rem;">
+          <li><i class="fa-solid fa-user-tie"></i> Perfil LinkedIn de cada participante</li>
+          <li><i class="fa-solid fa-building"></i> Info reciente de las empresas (news, funding)</li>
+          <li><i class="fa-solid fa-rotate-left"></i> Historial de conversaciones previas (Drive)</li>
+          <li><i class="fa-solid fa-lightbulb"></i> 3 talking points sugeridos</li>
+          <li><i class="fa-solid fa-triangle-exclamation"></i> Red flags o temas sensibles</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="padding:1.1rem;">
+        <h4 style="color:var(--accent); margin-bottom:0.6rem; font-size:0.95rem;"><i class="fa-solid fa-gauge-high"></i> KPIs del agente</h4>
+        <ul class="premium-list" style="font-size:0.85rem;">
+          <li><i class="fa-solid fa-clock-rotate-left" style="color:var(--accent);"></i> <strong>Tiempo ahorrado:</strong> ~12 min por reunión</li>
+          <li><i class="fa-solid fa-check-circle" style="color:var(--accent);"></i> <strong>Cobertura:</strong> % de meetings con briefing</li>
+          <li><i class="fa-solid fa-thumbs-up" style="color:var(--accent);"></i> <strong>Usefulness:</strong> feedback diario 👍/👎</li>
+          <li><i class="fa-solid fa-dollar-sign" style="color:var(--accent);"></i> <strong>Costo:</strong> $0.20-0.40 por briefing</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>El <span class="text-gradient">prompt del agente</span></h3>
+    <pre class="glass-code" style="max-width:1100px; font-size:0.78rem;">
+<code style="color:#f8fafc;"><span style="color:#94a3b8;"># System Prompt — Meeting Prep Agent</span>
+
+Sos un analista ejecutivo que prepara briefings de reuniones. Corrés
+todos los días a las 7 AM y generás un informe por cada reunión del
+calendario del usuario.
+
+<span style="color:#00f2fe;">## PROCESO (en este orden):</span>
+
+1. Usá MCP Calendar → get_events(from=today 00:00, to=today 23:59)
+2. Por cada evento con >1 participante externo:
+   a. Extraé email, nombre, empresa de cada participante
+   b. Web search: "{nombre} {empresa}" + LinkedIn URL
+   c. NotebookLM query: "interacciones previas con {empresa}"
+   d. Generá 3 talking points + 1 red flag (si aplica)
+3. Consolidá todo en un JSON con schema {{MEETING_BRIEFING_SCHEMA}}
+4. POST al dashboard: https://briefings.tudominio.com/api/today
+
+<span style="color:#00f2fe;">## REGLAS:</span>
+
+- Si no encontrás info del participante → marcá "perfil no encontrado",
+  NO inventes. La alucinación mata la confianza en el agente.
+- Meetings internos (solo dominio propio) → skip, no gastes tokens.
+- Si el meeting es dentro de las próximas 2h → prioridad alta,
+  briefing completo. Si es a la tarde → briefing short-form.
+- Respetá privacidad: no incluyas info personal no profesional
+  (religión, orientación, salud).
+
+<span style="color:#00f2fe;">## OUTPUT SCHEMA (siempre):</span>
+
+{{
+  "meeting_id": "...",
+  "time": "10:30",
+  "participants": [{{ name, company, linkedin, role, summary }}],
+  "talking_points": ["...", "...", "..."],
+  "red_flags": ["..."],
+  "prev_context": "...",
+  "confidence": 0-100
+}}</code></pre>
+  </section>
+
+  <section>
+    <h3>El dashboard en <span class="text-gradient">v0 + Vercel</span></h3>
+    <div class="grid-2" style="max-width:1100px; margin:0 auto; gap:1.5rem;">
+      <div>
+        <p style="font-size:0.95rem; color:var(--text-main); text-align:left; margin-bottom:0.8rem;">
+          <strong>v0.app</strong> genera una web completa a partir de un prompt. En 2026 te deploya directo a Vercel con GitHub integrado. Para este caso, 3 prompts alcanzan.
+        </p>
+        <pre class="glass-code" style="font-size:0.75rem; margin:0;">
+<code style="color:#f8fafc;"><span style="color:#94a3b8;"># Prompt para v0.app</span>
+
+"Dashboard de briefings de reuniones.
+ Header con fecha de hoy + logo.
+ Grid de cards, una por reunión.
+ Cada card muestra: hora, participantes
+ con foto/iniciales, empresa, 3 talking
+ points y red flags en rojo.
+
+ Estilo: minimal, dark mode, Tailwind.
+ Datos: fetch GET /api/today
+
+ Mobile-first. Que al tocar una card se
+ expanda a detalle completo."</code></pre>
+      </div>
+      <div class="glass-card" style="padding:1.2rem;">
+        <h4 style="color:var(--green); margin-bottom:0.7rem; font-size:0.95rem;"><i class="fa-solid fa-rocket"></i> Deploy en 3 pasos</h4>
+        <ul class="premium-list" style="font-size:0.85rem;">
+          <li><i class="fa-solid fa-1" style="color:var(--green);"></i> Prompt en v0.app → código React generado</li>
+          <li><i class="fa-solid fa-2" style="color:var(--green);"></i> "Deploy to Vercel" → live en 30 segundos</li>
+          <li><i class="fa-solid fa-3" style="color:var(--green);"></i> Endpoint <code>/api/today</code> recibe POST del agente</li>
+        </ul>
+        <div class="highlight-box green" style="margin:0.8rem 0 0; font-size:0.82rem;">
+          <strong>Costo total del stack:</strong> Vercel hobby plan $0 · v0 free tier $5 crédito/mes · Cowork Pro $20/mes · APIs Claude ~$3-6/mes según volumen.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>La versión <span class="text-gradient-amber">multiagente</span> del mismo caso</h3>
+    <p style="font-size:0.95rem; color:var(--text-muted); max-width:950px; margin:0.5rem auto 1rem;">
+      Podés hacerlo con <strong>1 agente</strong> que haga todo (el prompt anterior). Pero si escalás a 20+ reuniones/día, conviene dividir en <strong>3 agentes especializados</strong>:
+    </p>
+    <div class="grid-3" style="max-width:1200px; margin:0.5rem auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.1rem; border-top:4px solid var(--secondary);">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#00f2fe,#0ea5e9);"><i class="fa-solid fa-calendar"></i></div>
+        <h4 style="color:var(--secondary); font-size:0.95rem; text-align:center; margin-bottom:0.5rem;">Agente Calendar</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0 0 0.5rem;">Lee el Calendar, extrae participantes, filtra meetings internos, arma la lista de trabajo.</p>
+        <p style="font-size:0.75rem; color:var(--accent); margin:0;"><strong>Model:</strong> Haiku 4.5 (barato, rápido)</p>
+      </div>
+      <div class="glass-card" style="padding:1.1rem; border-top:4px solid var(--accent);">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#f59e0b,#ef4444);"><i class="fa-solid fa-magnifying-glass"></i></div>
+        <h4 style="color:var(--accent); font-size:0.95rem; text-align:center; margin-bottom:0.5rem;">Agente Researcher</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0 0 0.5rem;">Por cada participante: web search, LinkedIn, Drive. Paraleliza las búsquedas.</p>
+        <p style="font-size:0.75rem; color:var(--accent); margin:0;"><strong>Model:</strong> Sonnet 4.6 (balance)</p>
+      </div>
+      <div class="glass-card" style="padding:1.1rem; border-top:4px solid var(--primary);">
+        <div class="agent-icon" style="background:linear-gradient(135deg,#8a2be2,#00f2fe);"><i class="fa-solid fa-file-pen"></i></div>
+        <h4 style="color:#e2cbff; font-size:0.95rem; text-align:center; margin-bottom:0.5rem;">Agente Writer</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0 0 0.5rem;">Consolida todo, escribe el briefing ejecutivo, publica al dashboard.</p>
+        <p style="font-size:0.75rem; color:var(--accent); margin:0;"><strong>Model:</strong> Opus 4.6 (el mejor)</p>
+      </div>
+    </div>
+    <div class="highlight-box amber" style="max-width:1050px; margin:0.8rem auto 0; font-size:0.9rem;">
+      <strong>La regla de oro:</strong> modelo barato al principio del pipeline (donde hay volumen), modelo caro solo donde la calidad del output importa. Así bajás el costo del 15× de multiagente a ~4×.
+    </div>
+  </section>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 5 · 10 min — LIVE BUILD 2: EDITOR JEFE + CURADOR        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill amber"><i class="fa-solid fa-wrench"></i> BLOQUE 5 · 10 MIN · LIVE BUILD 2</span>
+    <h2>Editor Jefe + Curador</h2>
+    <p style="font-size:1.1rem; color:var(--text-muted); max-width:900px; margin:0.5rem auto 1.2rem;">
+      Un sistema <strong style="color:var(--accent);">multiagente real con handoff</strong>: el Editor Jefe consolida noticias de fuentes selectas y manda un digest por email. El Curador lo lee y, si detecta algo crítico, te alerta por Telegram <em>inmediatamente</em>.
+    </p>
+    <div class="grid-2" style="max-width:1100px; margin:0 auto; gap:1.5rem;">
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--secondary);">
+        <h4 style="color:var(--secondary); margin-bottom:0.6rem; font-size:1rem;"><i class="fa-solid fa-user-tie"></i> Agente 1 · Editor Jefe</h4>
+        <ul class="premium-list" style="font-size:0.85rem;">
+          <li><i class="fa-solid fa-rss"></i> Corre cada 6 h · lee RSS + URLs específicas</li>
+          <li><i class="fa-solid fa-filter"></i> Filtra duplicados y contenido low-value</li>
+          <li><i class="fa-solid fa-layer-group"></i> Agrupa por tema, jerarquiza</li>
+          <li><i class="fa-solid fa-envelope"></i> Output: digest por email al final del día</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--red);">
+        <h4 style="color:var(--red); margin-bottom:0.6rem; font-size:1rem;"><i class="fa-solid fa-bell"></i> Agente 2 · Curador</h4>
+        <ul class="premium-list" style="font-size:0.85rem;">
+          <li><i class="fa-solid fa-bolt" style="color:var(--red);"></i> Dispara <em>en tiempo real</em> cuando el Editor termina</li>
+          <li><i class="fa-solid fa-triangle-exclamation" style="color:var(--red);"></i> Evalúa contra reglas de criticidad</li>
+          <li><i class="fa-brands fa-telegram" style="color:var(--red);"></i> Notificación Telegram si pasa el umbral</li>
+          <li><i class="fa-solid fa-tag" style="color:var(--red);"></i> Tags: urgent · competitive · opportunity</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:1rem auto 0; font-size:0.92rem;">
+      <strong>💡 Por qué 2 agentes y no 1:</strong> el Editor Jefe puede fallar en "jerarquizar" — todo le parece importante. El Curador con rol acotado ("solo me importa competidores y cambios regulatorios") filtra con precisión quirúrgica. Dos cerebros, dos vocaciones.
+    </div>
+  </section>
+
+  <section>
+    <h3>Arquitectura del flujo en <span class="text-gradient">n8n</span></h3>
+    <div style="max-width:1150px; margin:1.2rem auto; display:grid; grid-template-columns:auto auto auto auto auto auto auto; align-items:center; gap:0.4rem; justify-content:center;">
+      <div class="step-node cyan" style="min-width:100px;">
+        <i class="fa-solid fa-clock" style="color:var(--secondary);"></i><br>
+        <strong>Cron</strong><br>
+        <span style="font-size:0.7rem; color:var(--text-muted);">cada 6 h</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <div class="step-node primary" style="min-width:120px;">
+        <i class="fa-solid fa-rss" style="color:#e2cbff;"></i><br>
+        <strong>Scraper</strong><br>
+        <span style="font-size:0.7rem; color:var(--text-muted);">RSS + URLs</span>
+      </div>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
+      <div class="step-node amber" style="min-width:130px;">
+        <i class="fa-solid fa-user-tie" style="color:var(--accent);"></i><br>
+        <strong>Editor Jefe</strong><br>
+        <span style="font-size:0.7rem; color:var(--text-muted);">AI Agent 1</span>
+      </div>
+      <span class="step-arrow" style="color:var(--accent);"><i class="fa-solid fa-code-branch"></i></span>
+      <div style="display:grid; gap:0.5rem;">
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <div class="step-node green" style="min-width:120px; padding:0.5rem 0.8rem;">
+            <i class="fa-solid fa-envelope" style="color:var(--green);"></i>&nbsp;<strong>Email digest</strong><br>
+            <span style="font-size:0.68rem; color:var(--text-muted);">final del día</span>
+          </div>
+        </div>
+        <div style="display:flex; align-items:center; gap:0.4rem;">
+          <div class="step-node" style="min-width:120px; padding:0.5rem 0.8rem; border-color:var(--red); background:rgba(239,68,68,0.1);">
+            <i class="fa-solid fa-bell" style="color:var(--red);"></i>&nbsp;<strong>Curador</strong>
+            <span style="color:var(--red); padding:0 0.3rem;"><i class="fa-solid fa-arrow-right"></i></span>
+            <i class="fa-brands fa-telegram" style="color:var(--red);"></i>&nbsp;<strong>Telegram</strong><br>
+            <span style="font-size:0.68rem; color:var(--text-muted);">solo si score ≥ 80</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:1rem auto 0; font-size:0.9rem;">
+      <strong>🔧 El patrón en n8n:</strong> el Editor Jefe publica al email por un branch y llama al Curador como <strong>AI Agent Tool node</strong> en el otro. Dos rutas desde el mismo nodo. Es el patrón estándar multiagente en n8n — el orquestador usa a los sub-agentes como si fueran herramientas.
+    </div>
+  </section>
+
+  <section>
+    <h3>Los dos prompts del crew</h3>
+    <div class="grid-2" style="max-width:1200px; margin:0.5rem auto; gap:1rem; align-items:stretch;">
+      <pre class="glass-code" style="font-size:0.72rem; margin:0;">
+<code style="color:#f8fafc;"><span style="color:#00f2fe;"># EDITOR JEFE</span>
+
+Sos el Editor Jefe de una mesa de análisis.
+Recibís un batch de noticias scrapeadas.
+
+TAREA:
+1. Deduplicar (misma noticia, distintas
+   fuentes → 1 sola entrada)
+2. Clasificar por tema: {{TEMAS_USUARIO}}
+3. Descartar contenido low-value
+   (clickbait, listicles, PR genérico)
+4. Por cada noticia que sobrevive:
+   - Título reformulado en 1 línea
+   - Resumen de 40 palabras
+   - 3 keywords
+   - Fuente + link original
+   - Score de relevancia 0-100
+
+5. Entregá top 15 en JSON estructurado.
+
+REGLAS:
+- Si hay menos de 5 noticias relevantes
+  no envíes email. Esperá al próximo ciclo.
+- Jamás inventes fuentes. Siempre link real.
+
+OUTPUT: JSON válido. Sin preámbulo.</code></pre>
+      <pre class="glass-code" style="font-size:0.72rem; margin:0;">
+<code style="color:#f8fafc;"><span style="color:#ef4444;"># CURADOR (handoff del Editor Jefe)</span>
+
+Sos el Curador Crítico. Recibís el JSON
+del Editor Jefe y decidís qué necesita
+atención <em>inmediata</em> del usuario.
+
+CRITERIOS DE ALERTA:
+- Competidor directo: {{LISTA_COMPETIDORES}}
+  lanza producto, funding o cambio de precio
+- Cambio regulatorio en: {{MERCADOS_USUARIO}}
+- Oportunidad táctica clara
+  (ej: crisis de un competidor)
+- Menciones a {{EMPRESA_USUARIO}} o
+  {{PERSONAS_KEY}}
+
+SCORE:
+- 80-100: Telegram inmediato
+- 50-79: incluir en digest de email
+         con flag "atencion"
+- 0-49: solo digest normal
+
+OUTPUT por cada alerta 80+:
+{{
+  "titulo": "...",
+  "por_que_importa": "1 párrafo",
+  "accion_sugerida": "...",
+  "link": "..."
+}}</code></pre>
+    </div>
+    <div class="highlight-box amber" style="max-width:1050px; margin:1rem auto 0; font-size:0.9rem;">
+      <strong>⚡ Tip del Live Build:</strong> las <code style="background:rgba(0,0,0,0.3);padding:0.15rem 0.4rem;border-radius:4px;">{{VARIABLES}}</code> en doble llave son donde parametrizás. En n8n las cargás desde un Google Sheet de configuración — así cambiás competidores, temas y personas sin tocar el prompt.
+    </div>
+  </section>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- BLOQUE 6 · 4 min — CIERRE                                      -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<section>
+  <section>
+    <span class="glass-pill green"><i class="fa-solid fa-flag-checkered"></i> BLOQUE 6 · 4 MIN</span>
+    <h2>Cuánto <span class="text-gradient">cuesta</span> correr todo esto</h2>
+    <table style="max-width:1100px; margin:1rem auto; font-size:0.9rem;">
+      <tr>
+        <th>Componente</th>
+        <th>Plan usado</th>
+        <th style="text-align:right;">Costo mensual</th>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Claude Cowork</strong> <span style="color:var(--text-muted); font-size:0.82rem;">(orquestador principal)</span></td>
+        <td>Pro</td>
+        <td style="text-align:right;">~$20</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">n8n</strong> <span style="color:var(--text-muted); font-size:0.82rem;">(orquestación multiagente)</span></td>
+        <td>Self-hosted (VPS $5) o Cloud Starter</td>
+        <td style="text-align:right;">$5 – $20</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">APIs de LLMs</strong> <span style="color:var(--text-muted); font-size:0.82rem;">(Haiku + Sonnet + Opus mix)</span></td>
+        <td>Pay-as-you-go</td>
+        <td style="text-align:right;">$15 – $40</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Vercel + v0</strong> <span style="color:var(--text-muted); font-size:0.82rem;">(dashboard)</span></td>
+        <td>Hobby + v0 Free tier</td>
+        <td style="text-align:right;">$0 – $20</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">NotebookLM</strong> <span style="color:var(--text-muted); font-size:0.82rem;">(fuente de verdad)</span></td>
+        <td>Free (o Google One si ya lo tenés)</td>
+        <td style="text-align:right;">$0</td>
+      </tr>
+      <tr>
+        <td><strong style="color:var(--secondary);">Telegram + Gmail</strong></td>
+        <td>Free</td>
+        <td style="text-align:right;">$0</td>
+      </tr>
+      <tr style="background:rgba(34,197,94,0.08);">
+        <td colspan="2"><strong>Total estimado del stack completo</strong></td>
+        <td style="text-align:right;"><strong style="color:var(--green);">$40 – $100 USD/mes</strong></td>
+      </tr>
+    </table>
+    <div class="grid-2" style="max-width:1100px; margin:0.8rem auto 0; gap:1rem;">
+      <div class="highlight-box green" style="margin:0; font-size:0.88rem; padding:0.7rem 1rem 0.7rem 1.3rem;">
+        <strong>💰 Variable clave:</strong> el mix de modelos. Usar Opus en todo infla 10× la factura de APIs. Usalo sólo donde la calidad se nota.
+      </div>
+      <div class="highlight-box amber" style="margin:0; font-size:0.88rem; padding:0.7rem 1rem 0.7rem 1.3rem;">
+        <strong>⚡ ROI típico:</strong> si ahorrás 1 hora/día de research manual × $50/h × 22 días = $1.100. El stack se paga 10× solo.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h3>¿Qué sigue cuando esto <span class="text-gradient">escala</span>?</h3>
+    <div class="grid-2" style="max-width:1100px; margin:0.8rem auto; gap:1.5rem;">
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--primary);">
+        <h4 style="color:#e2cbff; margin-bottom:0.6rem;"><i class="fa-solid fa-rocket"></i> Claude Managed Agents</h4>
+        <p style="font-size:0.87rem; color:var(--text-muted); margin-bottom:0.6rem;">
+          Lanzado el <strong>8 de Abril 2026</strong> (hace 10 días). Anthropic corre tu agente en su infra: sandboxed execution, state management, error recovery, credentials. Vos solo definís qué hace.
+        </p>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-check"></i> $0.08/hora de runtime + costo de tokens</li>
+          <li><i class="fa-solid fa-check"></i> Ideal cuando sale del juguete y entra en producción</li>
+          <li><i class="fa-solid fa-check"></i> Notion, Asana, Rakuten ya lo usan en vivo</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="padding:1.3rem; border-top:4px solid var(--accent);">
+        <h4 style="color:var(--accent); margin-bottom:0.6rem;"><i class="fa-solid fa-shield-halved"></i> Gobernanza que vas a necesitar</h4>
+        <ul class="premium-list" style="font-size:0.87rem;">
+          <li><i class="fa-solid fa-eye" style="color:var(--accent);"></i> <strong>Observabilidad:</strong> qué hizo cada agente, cuándo, por qué</li>
+          <li><i class="fa-solid fa-hand-paper" style="color:var(--accent);"></i> <strong>HITL para acciones críticas:</strong> enviar emails, crear tareas, gastar plata</li>
+          <li><i class="fa-solid fa-lock" style="color:var(--accent);"></i> <strong>Permisos por agente:</strong> read-only vs write, scope por MCP</li>
+          <li><i class="fa-solid fa-file-shield" style="color:var(--accent);"></i> <strong>Audit trail:</strong> logs para cumplir o revisar cuando algo sale mal</li>
+        </ul>
+      </div>
+    </div>
+    <div class="highlight-box cyan" style="max-width:1050px; margin:0.6rem auto 0; font-size:0.9rem;">
+      <strong>🎯 La regla de producción:</strong> un crew sin observabilidad no es un sistema — es una bomba esperando el momento de explotar. Arrancá con logs desde el día 1.
+    </div>
+  </section>
+
+  <section>
+    <h3>Lo que <span class="text-gradient">te llevás hoy</span></h3>
+    <div class="grid-3" style="max-width:1200px; margin:0.5rem auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.1rem; border-top:4px solid var(--secondary);">
+        <h4 style="color:var(--secondary); margin-bottom:0.6rem; font-size:0.95rem;"><i class="fa-solid fa-file-code"></i> Flujos n8n</h4>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-diagram-project"></i> Meeting Prep Agent <span style="color:var(--text-muted); font-size:0.75rem;">(versión n8n)</span></li>
+          <li><i class="fa-solid fa-users"></i> Editor Jefe + Curador multiagente</li>
+          <li><i class="fa-solid fa-copy"></i> Los 4 prompts listos para parametrizar</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="padding:1.1rem; border-top:4px solid var(--primary);">
+        <h4 style="color:#e2cbff; margin-bottom:0.6rem; font-size:0.95rem;"><i class="fa-solid fa-brain"></i> Librería de Skills</h4>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-chart-line"></i> Scoring de Leads (NotebookLM)</li>
+          <li><i class="fa-solid fa-users"></i> AI Super Marketing Team</li>
+          <li><i class="fa-solid fa-wand-magic-sparkles"></i> Skill-Creator (oficial Anthropic)</li>
+        </ul>
+      </div>
+      <div class="glass-card" style="padding:1.1rem; border-top:4px solid var(--accent);">
+        <h4 style="color:var(--accent); margin-bottom:0.6rem; font-size:0.95rem;"><i class="fa-solid fa-plug"></i> Kit MCP + Dashboard</h4>
+        <ul class="premium-list" style="font-size:0.82rem;">
+          <li><i class="fa-solid fa-plug"></i> Config MCP para Calendar, Drive, Notion</li>
+          <li><i class="fa-solid fa-link"></i> Repo NotebookLM MCP (comunitario)</li>
+          <li><i class="fa-solid fa-bolt"></i> Plantilla v0 del dashboard + deploy Vercel</li>
+        </ul>
+      </div>
+    </div>
+    <div class="glass-card" style="max-width:1100px; margin:0.8rem auto 0; padding:1rem 1.3rem; border:1px solid rgba(245,158,11,0.4); background:rgba(245,158,11,0.06);">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;">
+        <div style="flex:1; min-width:400px; text-align:left;">
+          <h4 style="color:var(--accent); margin:0 0 0.4rem; font-size:0.98rem;">
+            <i class="fa-solid fa-users"></i> Skill — AI Super Team
+            <span style="font-size:0.7rem; background:rgba(245,158,11,0.2); border:1px solid rgba(245,158,11,0.4); color:var(--accent); padding:0.15rem 0.5rem; border-radius:6px; margin-left:0.4rem; letter-spacing:0.05em;">BONUS</span>
+          </h4>
+          <p style="font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.5;">
+            1 orquestador + 5 expertos de marketing como skills de Claude:
+            <strong style="color:var(--text-main);">Hormozi · Ogilvy · Gary Vee · Brunson · Sabri Suby.</strong>
+          </p>
+        </div>
+        <a href="https://glimmer-farmhouse-441.notion.site/The-AI-Super-Team-5-Marketing-Legends-as-Claude-Skills-31993aa14ae480818f63c2446fb78942"
+           style="display:inline-flex; align-items:center; gap:0.5rem; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.4); color:var(--accent); padding:0.55rem 1rem; border-radius:8px; font-size:0.82rem; font-weight:600; text-decoration:none; white-space:nowrap;">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver guía de instalación →
+        </a>
+      </div>
+    </div>
+    <div class="grid-2" style="max-width:1100px; margin:1rem auto 0; gap:1rem;">
+      <div class="highlight-box green" style="margin:0; padding:0.8rem 1rem 0.8rem 1.3rem; font-size:0.88rem;">
+        <strong>📚 Software y entornos:</strong> links oficiales de descarga de Antigravity, Claude Code, Cowork, guías de setup de APIs (Claude, OpenAI, Gemini).
+      </div>
+      <div class="highlight-box cyan" style="margin:0; padding:0.8rem 1rem 0.8rem 1.3rem; font-size:0.88rem;">
+        <strong>🎥 Cápsulas técnicas:</strong> configurar Antigravity · instalar Cowork con Skills · conectar MCP de Calendar y Drive · deploy de dashboard v0.
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="glass-pill green"><i class="fa-solid fa-seedling"></i> CIERRE</span>
+    <h2>El siguiente paso <span class="text-gradient">es tuyo</span></h2>
+    <p style="font-size:1.15rem; color:var(--text-main); max-width:900px; margin:1rem auto;">
+      En Clase 2 construiste tu primer agente. En Clase 3 lo multiplicaste en un equipo.
+    </p>
+    <p style="font-size:1.05rem; color:var(--text-muted); max-width:900px; margin:0 auto 1.5rem;">
+      Lo que viene no es más teoría. Es <strong style="color:var(--secondary);">implementar tu caso real</strong> — el cuello de botella con el que entraste al programa — y hacerlo correr. Con tu 1:1 quincenal tenemos el espacio para que no quede en idea.
+    </p>
+    <div class="grid-3" style="max-width:1100px; margin:1.5rem auto; gap:1rem;">
+      <div class="glass-card" style="padding:1.2rem; text-align:center;">
+        <i class="fa-solid fa-1" style="font-size:2rem; color:var(--secondary); margin-bottom:0.6rem;"></i>
+        <h4 style="font-size:0.95rem; margin-bottom:0.4rem;">Elegí 1 caso</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">El proceso que te duele más. Uno solo. No intentes con tres.</p>
+      </div>
+      <div class="glass-card" style="padding:1.2rem; text-align:center;">
+        <i class="fa-solid fa-2" style="font-size:2rem; color:var(--primary); margin-bottom:0.6rem;"></i>
+        <h4 style="font-size:0.95rem; margin-bottom:0.4rem;">Construí la v1 esta semana</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">Feo, con errores, que funcione. La perfección mata proyectos.</p>
+      </div>
+      <div class="glass-card" style="padding:1.2rem; text-align:center;">
+        <i class="fa-solid fa-3" style="font-size:2rem; color:var(--accent); margin-bottom:0.6rem;"></i>
+        <h4 style="font-size:0.95rem; margin-bottom:0.4rem;">Traé los errores al 1:1</h4>
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">Los agentes se rompen. Depurar es el 80% del trabajo real.</p>
+      </div>
+    </div>
+    <p style="font-size:1rem; color:var(--secondary); margin-top:1rem;">
+      Nos vemos en tu próximo 1:1. Con el flujo corriendo.
+    </p>
+    <p style="font-size:0.85rem; color:var(--text-muted); margin-top:1.5rem;">
+      Axel Laban Arzubi · eCommerce Institute · Programa AGENTIC · Clase 3
+    </p>
+  </section>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/4.3.1/reveal.min.js"></script>
+<script>
+  Reveal.initialize({
+    hash: true,
+    slideNumber: 'c/t',
+    transition: 'slide',
+    controls: true,
+    progress: true,
+    center: true,
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 1.5,
+  });
+</script>
+</body>
+</html>
