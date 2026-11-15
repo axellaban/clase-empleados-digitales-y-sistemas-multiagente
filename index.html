@@ -33,7 +33,7 @@
       --glass-border: rgba(255,255,255,0.09);
       --glass-border-hover: rgba(255,255,255,0.18);
       --text-main: #eef2ff;
-      --text-muted: #7a859a;
+      --text-muted: #8b96ab;
       --accent: #f59e0b;
       --green: #22c55e;
       --red: #ef4444;
@@ -51,7 +51,6 @@
       overflow: hidden;
     }
 
-    /* Blob 1 — purple top-left */
     body::before {
       content: '';
       position: fixed;
@@ -66,7 +65,6 @@
       animation: blobFloat1 20s ease-in-out infinite;
     }
 
-    /* Blob 2 — cyan bottom-right */
     body::after {
       content: '';
       position: fixed;
@@ -108,7 +106,6 @@
       background: transparent;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      font-feature-settings: 'kern' 1, 'liga' 1;
     }
     .reveal .slides { z-index: 1; }
 
@@ -120,6 +117,16 @@
       line-height: 1.15;
       color: var(--text-main);
       margin: 0 0 0.5rem;
+    }
+
+    .reveal code {
+      font-family: 'JetBrains Mono', monospace;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      padding: 0.1rem 0.4rem;
+      border-radius: 6px;
+      font-size: 0.85em;
+      color: #e2e8f0;
     }
 
     /* ─── GRADIENTS ─── */
@@ -146,9 +153,9 @@
       -webkit-backdrop-filter: blur(18px) saturate(1.5);
       border: 1px solid var(--glass-border);
       border-radius: 16px;
-      padding: 1.5rem;
+      padding: 1.35rem 1.5rem;
       box-shadow: 0 4px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.055);
-      margin: 0.6rem auto;
+      margin: 0;
       transition: transform 0.28s cubic-bezier(0.34,1.56,0.64,1),
                   box-shadow 0.28s ease,
                   border-color 0.28s ease,
@@ -156,102 +163,88 @@
     }
 
     .glass-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
       background: var(--glass-bg-hover);
       border-color: var(--glass-border-hover);
       box-shadow: 0 20px 56px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.1);
     }
 
-    .glass-card[style*="border-top:4px solid var(--primary)"]:hover,
-    .glass-card[style*="border-top: 4px solid var(--primary)"]:hover {
-      box-shadow: var(--glow-primary), inset 0 1px 0 rgba(255,255,255,0.1);
+    .reveal section.present .glass-card {
+      animation: cardIn 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
-    .glass-card[style*="border-top:4px solid var(--secondary)"]:hover,
-    .glass-card[style*="border-top: 4px solid var(--secondary)"]:hover {
-      box-shadow: var(--glow-cyan), inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .glass-card[style*="border-top:4px solid var(--accent)"]:hover,
-    .glass-card[style*="border-top: 4px solid var(--accent)"]:hover {
-      box-shadow: var(--glow-amber), inset 0 1px 0 rgba(255,255,255,0.1);
-    }
-    .glass-card[style*="border-top:4px solid var(--green)"]:hover,
-    .glass-card[style*="border-top: 4px solid var(--green)"]:hover {
-      box-shadow: var(--glow-green), inset 0 1px 0 rgba(255,255,255,0.1);
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ─── GLASS PILLS ─── */
+    /* ─── GLASS PILLS & MINI BADGES ─── */
     .glass-pill {
       background: rgba(138,43,226,0.14);
       border: 1px solid rgba(138,43,226,0.32);
       color: #d4baff;
-      padding: 0.32rem 1.05rem;
+      padding: 0.3rem 1rem;
       border-radius: 50px;
-      font-size: 0.76rem;
+      font-size: 0.74rem;
       font-weight: 700;
       display: inline-block;
-      margin-bottom: 0.85rem;
+      margin-bottom: 0.75rem;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
-      cursor: default;
-    }
-    .glass-pill:hover {
-      background: rgba(138,43,226,0.28);
-      border-color: rgba(138,43,226,0.6);
-      transform: translateY(-1px);
-      box-shadow: 0 4px 18px rgba(138,43,226,0.3);
     }
     .glass-pill.cyan {
-      background: rgba(0,242,254,0.07); border-color: rgba(0,242,254,0.26); color: var(--secondary);
-    }
-    .glass-pill.cyan:hover {
-      background: rgba(0,242,254,0.16); border-color: rgba(0,242,254,0.52);
-      box-shadow: 0 4px 18px rgba(0,242,254,0.25);
+      background: rgba(0,242,254,0.08); border-color: rgba(0,242,254,0.28); color: var(--secondary);
     }
     .glass-pill.green {
-      background: rgba(34,197,94,0.09); border-color: rgba(34,197,94,0.32); color: #86efac;
-    }
-    .glass-pill.green:hover {
-      background: rgba(34,197,94,0.2); border-color: rgba(34,197,94,0.58);
-      box-shadow: 0 4px 18px rgba(34,197,94,0.25);
+      background: rgba(34,197,94,0.1); border-color: rgba(34,197,94,0.34); color: #86efac;
     }
     .glass-pill.amber {
-      background: rgba(245,158,11,0.09); border-color: rgba(245,158,11,0.32); color: #fcd34d;
-    }
-    .glass-pill.amber:hover {
-      background: rgba(245,158,11,0.2); border-color: rgba(245,158,11,0.58);
-      box-shadow: 0 4px 18px rgba(245,158,11,0.25);
+      background: rgba(245,158,11,0.1); border-color: rgba(245,158,11,0.34); color: #fcd34d;
     }
     .glass-pill.red {
-      background: rgba(239,68,68,0.09); border-color: rgba(239,68,68,0.32); color: #fca5a5;
+      background: rgba(239,68,68,0.1); border-color: rgba(239,68,68,0.34); color: #fca5a5;
+    }
+
+    .badge-mini {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 8px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-main);
     }
 
     /* ─── GRIDS ─── */
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; align-items: stretch; }
+    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; align-items: stretch; }
     .grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.1rem; align-items: stretch; }
-    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.9rem; align-items: stretch; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.95rem; align-items: stretch; }
 
     /* ─── PREMIUM LIST ─── */
     .reveal ul.premium-list { list-style: none; padding: 0; margin: 0; }
     .reveal ul.premium-list li {
-      margin-bottom: 0.65rem; font-size: 0.9rem;
-      display: flex; align-items: flex-start; gap: 0.65rem; line-height: 1.45;
+      margin-bottom: 0.55rem; font-size: 0.88rem;
+      display: flex; align-items: flex-start; gap: 0.6rem; line-height: 1.4;
     }
+    .reveal ul.premium-list li:last-child { margin-bottom: 0; }
     .reveal ul.premium-list li i {
       color: var(--secondary); margin-top: 0.18rem;
-      font-size: 0.85rem; flex-shrink: 0; width: 0.9rem;
+      font-size: 0.84rem; flex-shrink: 0; width: 0.9rem;
     }
 
     /* ─── CODE BLOCKS ─── */
     .reveal pre.glass-code {
       background: rgba(0,0,0,0.62);
-      border: 1px solid rgba(0,242,254,0.14);
-      border-top: 2px solid rgba(0,242,254,0.38);
+      border: 1px solid rgba(0,242,254,0.16);
+      border-top: 2px solid rgba(0,242,254,0.4);
       border-radius: 12px;
-      padding: 1.1rem 1.4rem;
-      font-size: 0.8rem;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.7);
-      line-height: 1.65;
+      padding: 1rem 1.3rem;
+      font-size: 0.78rem;
+      font-family: 'JetBrains Mono', monospace;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+      line-height: 1.6;
       text-align: left;
       overflow: auto;
       margin: 0;
@@ -261,93 +254,83 @@
     .highlight-box {
       position: relative;
       border-left: 3px solid var(--primary);
-      padding: 0.8rem 1.2rem 0.8rem 1.5rem;
-      background: rgba(138,43,226,0.06);
-      margin: 0.8rem 0;
+      padding: 0.7rem 1.2rem;
+      background: rgba(138,43,226,0.07);
+      margin: 0.85rem auto 0;
       border-radius: 0 12px 12px 0;
       text-align: left;
+      font-size: 0.88rem;
+      line-height: 1.4;
     }
-    .highlight-box.cyan  { border-left-color: var(--secondary); background: rgba(0,242,254,0.05); }
-    .highlight-box.amber { border-left-color: var(--accent);    background: rgba(245,158,11,0.06); }
-    .highlight-box.green { border-left-color: var(--green);     background: rgba(34,197,94,0.06); }
-    .highlight-box.red   { border-left-color: var(--red);       background: rgba(239,68,68,0.06); }
+    .highlight-box.cyan  { border-left-color: var(--secondary); background: rgba(0,242,254,0.06); }
+    .highlight-box.amber { border-left-color: var(--accent);    background: rgba(245,158,11,0.07); }
+    .highlight-box.green { border-left-color: var(--green);     background: rgba(34,197,94,0.07); }
+    .highlight-box.red   { border-left-color: var(--red);       background: rgba(239,68,68,0.07); }
 
     /* ─── TABLES ─── */
     .reveal table {
       width: 100%; border-collapse: separate; border-spacing: 0;
       border-radius: 12px; overflow: hidden;
       border: 1px solid var(--glass-border);
-      background: rgba(255,255,255,0.015);
+      background: rgba(255,255,255,0.02);
     }
     .reveal table th {
       background: rgba(255,255,255,0.07);
-      padding: 0.65rem 1rem;
-      font-size: 0.75rem; font-weight: 700;
+      padding: 0.6rem 1rem;
+      font-size: 0.74rem; font-weight: 700;
       text-align: left; color: var(--secondary);
       letter-spacing: 0.07em; text-transform: uppercase;
       border-bottom: 1px solid var(--glass-border);
     }
     .reveal table td {
-      padding: 0.65rem 1rem; font-size: 0.88rem; text-align: left;
-      border-top: 1px solid rgba(255,255,255,0.04);
-      transition: background 0.18s ease;
+      padding: 0.6rem 1rem; font-size: 0.84rem; text-align: left;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      line-height: 1.35;
     }
-    .reveal table tr:hover td { background: rgba(0,242,254,0.035); }
 
     /* ─── STEP FLOW ─── */
     .step-flow {
-      display: flex; align-items: center; justify-content: center;
-      gap: 0.55rem; margin: 1rem 0; flex-wrap: wrap;
+      display: flex; align-items: stretch; justify-content: center;
+      gap: 0.5rem; margin: 0.9rem auto; max-width: 1140px;
     }
     .step-node {
-      background: rgba(255,255,255,0.025);
-      border: 1px solid var(--glass-border);
-      border-radius: 12px; padding: 0.85rem 1.1rem;
-      font-size: 0.84rem; text-align: center; min-width: 155px;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      background: rgba(255,255,255,0.03);
+      border: 1.5px solid var(--glass-border);
+      border-radius: 14px; padding: 0.9rem 1rem;
+      font-size: 0.84rem; text-align: center; flex: 1;
+      display: flex; flex-direction: column; justify-content: center;
+      transition: transform 0.22s ease;
     }
     .step-node:hover { transform: translateY(-3px); }
-    .step-node.primary {
-      border-color: rgba(138,43,226,0.5); background: rgba(138,43,226,0.1);
-      box-shadow: 0 0 18px rgba(138,43,226,0.14);
+    .step-node.primary { border-color: rgba(138,43,226,0.5); background: rgba(138,43,226,0.1); }
+    .step-node.cyan    { border-color: rgba(0,242,254,0.45); background: rgba(0,242,254,0.08); }
+    .step-node.amber   { border-color: rgba(245,158,11,0.45); background: rgba(245,158,11,0.08); }
+    .step-node.green   { border-color: rgba(34,197,94,0.45); background: rgba(34,197,94,0.08); }
+    .step-arrow {
+      color: var(--secondary); font-size: 1.05rem; opacity: 0.75;
+      display: flex; align-items: center; padding: 0 0.1rem;
     }
-    .step-node.cyan {
-      border-color: rgba(0,242,254,0.45); background: rgba(0,242,254,0.08);
-      box-shadow: 0 0 18px rgba(0,242,254,0.12);
-    }
-    .step-node.amber {
-      border-color: rgba(245,158,11,0.45); background: rgba(245,158,11,0.08);
-      box-shadow: 0 0 18px rgba(245,158,11,0.12);
-    }
-    .step-node.green {
-      border-color: rgba(34,197,94,0.45); background: rgba(34,197,94,0.08);
-      box-shadow: 0 0 18px rgba(34,197,94,0.12);
-    }
-    .step-arrow { color: var(--text-muted); font-size: 1rem; opacity: 0.6; }
 
     /* ─── PROGRESS BAR & SLIDE NUMBER ─── */
     .reveal .progress { height: 3px; background: rgba(255,255,255,0.05); }
     .reveal .progress span {
       background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
       box-shadow: 0 0 14px rgba(0,242,254,0.6);
-      transition: width 0.45s ease;
     }
     .reveal .slide-number {
       background: rgba(255,255,255,0.06);
       border: 1px solid var(--glass-border);
       border-radius: 8px; padding: 0.18rem 0.55rem;
       font-size: 0.68rem; color: var(--text-muted);
-      letter-spacing: 0.06em; backdrop-filter: blur(8px);
       bottom: 14px; right: 14px;
     }
-    .reveal .controls button { color: rgba(0,242,254,0.45) !important; transition: color 0.2s, transform 0.2s; }
-    .reveal .controls button:hover { color: var(--secondary) !important; transform: scale(1.25); }
+    .reveal .controls button { color: rgba(0,242,254,0.45) !important; }
+    .reveal .controls button:hover { color: var(--secondary) !important; }
 
     /* ─── FRAGMENTS ─── */
     .reveal .fragment.fade-up {
-      opacity: 0; transform: translateY(14px);
-      transition: opacity 0.42s cubic-bezier(0.25,0.46,0.45,0.94),
-                  transform 0.42s cubic-bezier(0.25,0.46,0.45,0.94);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
     }
     .reveal .fragment.fade-up.visible { opacity: 1; transform: translateY(0); }
 
@@ -358,20 +341,18 @@
       column-gap: 3.4rem;
       row-gap: 0;
       max-width: 1120px;
-      margin: 0.7rem auto 0;
+      margin: 0.6rem auto 0;
       text-align: left;
     }
     .manifesto-item {
       display: flex;
       align-items: baseline;
       gap: 0.95rem;
-      padding: 0.85rem 0.2rem;
+      padding: 0.8rem 0.2rem;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       transition: border-color 0.2s ease, transform 0.2s ease;
     }
-    .manifesto-item:nth-last-child(-n+2) {
-      border-bottom: none;
-    }
+    .manifesto-item:nth-last-child(-n+2) { border-bottom: none; }
     .manifesto-item:hover {
       border-bottom-color: rgba(0, 242, 254, 0.35);
       transform: translateX(3px);
@@ -383,21 +364,18 @@
       color: var(--secondary);
       opacity: 0.9;
       flex-shrink: 0;
-      letter-spacing: 0.02em;
     }
     .manifesto-title {
       font-family: 'Outfit', sans-serif;
-      font-size: 1.04rem;
+      font-size: 1.02rem;
       font-weight: 700;
       color: #f8fafc;
-      letter-spacing: -0.015em;
       display: block;
-      margin-bottom: 0.14rem;
-      line-height: 1.25;
+      margin-bottom: 0.12rem;
     }
     .manifesto-phrase {
-      font-size: 0.83rem;
-      line-height: 1.38;
+      font-size: 0.82rem;
+      line-height: 1.36;
       color: var(--text-muted);
       display: block;
     }
@@ -422,68 +400,101 @@
 
   <span class="glass-pill"><i class="fa-solid fa-rocket"></i> PROGRAMA DE AGENTES DE IA · CLASE 5</span>
 
-  <h1 style="font-size:3.1rem; margin-bottom:1rem;">
+  <h1 style="font-size:3.15rem; margin-bottom:0.9rem;">
     Productización: UX,<br>
     <span class="text-gradient">Front-End</span> y Go-to-Live
   </h1>
 
-  <p style="font-size:1.18rem; color:var(--text-muted); max-width:860px; margin:0 auto 2rem; line-height:1.5;">
-    Construcción + publicación + pruebas: cómo pasar de una idea o plantilla a una <strong style="color:var(--secondary);">app publicada en vivo</strong>, colaborativa en GitHub, conectada a agentes y probada desde el celular.
+  <p style="font-size:1.12rem; color:var(--text-muted); max-width:800px; margin:0 auto 1.8rem; line-height:1.45;">
+    De una plantilla a una <strong style="color:var(--secondary);">app publicada en vivo</strong>, colaborativa en GitHub, conectada a agentes y probada en celular.
   </p>
 
-  <div style="margin-top:1.8rem; display:flex; gap:0.6rem; justify-content:center; flex-wrap:wrap;">
-    <span class="glass-pill cyan fragment fade-up" style="margin:0;"><i class="fa-solid fa-bullseye"></i> Usuario y Acción Principal</span>
-    <span class="glass-pill fragment fade-up" style="margin:0;"><i class="fa-solid fa-wand-magic-sparkles"></i> Herramientas IA</span>
-    <span class="glass-pill amber fragment fade-up" style="margin:0;"><i class="fa-brands fa-github"></i> GitHub + Colaboradores</span>
-    <span class="glass-pill cyan fragment fade-up" style="margin:0;"><i class="fa-solid fa-bolt"></i> Deploy en Vercel</span>
-    <span class="glass-pill green fragment fade-up" style="margin:0;"><i class="fa-solid fa-shield-halved"></i> Login, Datos y .env</span>
+  <div style="display:flex; gap:0.55rem; justify-content:center; flex-wrap:wrap;">
+    <span class="glass-pill cyan" style="margin:0;"><i class="fa-solid fa-bullseye"></i> UX & Acción Principal</span>
+    <span class="glass-pill" style="margin:0;"><i class="fa-solid fa-wand-magic-sparkles"></i> Herramientas IA</span>
+    <span class="glass-pill amber" style="margin:0;"><i class="fa-brands fa-github"></i> GitHub + Colaboradores</span>
+    <span class="glass-pill cyan" style="margin:0;"><i class="fa-solid fa-bolt"></i> Deploy en Vercel</span>
+    <span class="glass-pill green" style="margin:0;"><i class="fa-solid fa-shield-halved"></i> Login, Datos y .env</span>
   </div>
 
-  <p style="margin-top:2.4rem; font-size:0.9rem; color:var(--text-muted);">
+  <p style="margin-top:2.2rem; font-size:0.88rem; color:var(--text-muted);">
     Axel Laban Arzubi · eCommerce Institute · 19 de noviembre
   </p>
 
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════ -->
-<!-- 2. HOJA DE RUTA Y OBJETIVOS                                     -->
+<!-- 2. HOJA DE RUTA (ESTILO 4 TARJETAS DE CLASE 2)                  -->
 <!-- ═══════════════════════════════════════════════════════════════ -->
 
 <section>
 
-  <span class="glass-pill cyan"><i class="fa-solid fa-map"></i> Hoja de Ruta · 1 h</span>
+  <span class="glass-pill cyan"><i class="fa-solid fa-map"></i> RECORRIDO DE LA CLASE · 1 H</span>
 
-  <h2>Los 4 módulos de <span class="text-gradient">hoy</span></h2>
+  <h2>Hoja de Ruta — <span class="text-gradient">Construir, Publicar y Probar</span></h2>
 
-  <div style="max-width:1120px; margin:1rem auto;">
+  <div class="grid-4" style="max-width:1160px; margin:1rem auto 0.9rem; text-align:left;">
 
-    <table style="font-size:0.9rem;">
-      <tr class="fragment fade-up">
-        <td style="width:140px;"><span class="glass-pill" style="margin:0; font-size:0.74rem;">MÓDULO 1</span></td>
-        <td><strong>🎯 Definir qué vamos a publicar:</strong> usuario, problema y acción principal · Front-End vs. Back-End · qué herramienta de IA elegir.</td>
-        <td style="text-align:center; color:var(--text-muted); width:90px;">12 min</td>
-      </tr>
-      <tr class="fragment fade-up">
-        <td><span class="glass-pill cyan" style="margin:0; font-size:0.74rem;">MÓDULO 2</span></td>
-        <td><strong>🚀 Construir, guardar y publicar:</strong> plantilla en GitHub · sumar colaboradores en vivo y rutinas de agentes · publicar en Vercel.</td>
-        <td style="text-align:center; color:var(--secondary);">20 min</td>
-      </tr>
-      <tr class="fragment fade-up">
-        <td><span class="glass-pill amber" style="margin:0; font-size:0.74rem;">MÓDULO 3</span></td>
-        <td><strong>🔐 Sumar agentes, login y datos:</strong> recorrido de una consulta por dentro · login y permisos · variables de entorno (<code>.env</code>).</td>
-        <td style="text-align:center; color:var(--accent);">15 min</td>
-      </tr>
-      <tr class="fragment fade-up">
-        <td><span class="glass-pill green" style="margin:0; font-size:0.74rem;">MÓDULO 4</span></td>
-        <td><strong>📱 Probar y entregar:</strong> prueba cruzada en celular · las 6 preguntas de chequeo · autoevaluación y recursos.</td>
-        <td style="text-align:center; color:var(--green);">13 min</td>
-      </tr>
-    </table>
+    <div class="glass-card" style="border-top:4px solid var(--primary); display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+          <span class="badge-mini" style="color:#d4baff; border-color:rgba(138,43,226,0.4);">MÓDULO 1</span>
+          <span style="font-family:'Outfit'; font-size:1.3rem; font-weight:800; color:rgba(255,255,255,0.2);">01</span>
+        </div>
+        <h4 style="color:#d4baff; font-size:1.05rem;">Definir qué publicar</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          Usuario, problema y acción principal. Front vs. Back y qué herramienta elegir.
+        </p>
+      </div>
+      <div style="margin-top:0.8rem; font-size:0.74rem; color:#d4baff; font-weight:700;">⏱ 12 min · Producto y UX</div>
+    </div>
+
+    <div class="glass-card" style="border-top:4px solid var(--secondary); display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+          <span class="badge-mini" style="color:var(--secondary); border-color:rgba(0,242,254,0.4);">MÓDULO 2</span>
+          <span style="font-family:'Outfit'; font-size:1.3rem; font-weight:800; color:rgba(255,255,255,0.2);">02</span>
+        </div>
+        <h4 style="color:var(--secondary); font-size:1.05rem;">Guardar y publicar</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          GitHub, sumar colaboradores en vivo, rutinas de agentes y deploy en Vercel.
+        </p>
+      </div>
+      <div style="margin-top:0.8rem; font-size:0.74rem; color:var(--secondary); font-weight:700;">⏱ 20 min · GitHub → Vercel</div>
+    </div>
+
+    <div class="glass-card" style="border-top:4px solid var(--accent); display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+          <span class="badge-mini" style="color:#fcd34d; border-color:rgba(245,158,11,0.4);">MÓDULO 3</span>
+          <span style="font-family:'Outfit'; font-size:1.3rem; font-weight:800; color:rgba(255,255,255,0.2);">03</span>
+        </div>
+        <h4 style="color:#fcd34d; font-size:1.05rem;">Agentes, login y datos</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          La app por dentro: login, permisos por usuario y claves seguras en <code>.env</code>.
+        </p>
+      </div>
+      <div style="margin-top:0.8rem; font-size:0.74rem; color:#fcd34d; font-weight:700;">⏱ 15 min · Demo por dentro</div>
+    </div>
+
+    <div class="glass-card" style="border-top:4px solid var(--green); display:flex; flex-direction:column; justify-content:space-between;">
+      <div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.55rem;">
+          <span class="badge-mini" style="color:#86efac; border-color:rgba(34,197,94,0.4);">MÓDULO 4</span>
+          <span style="font-family:'Outfit'; font-size:1.3rem; font-weight:800; color:rgba(255,255,255,0.2);">04</span>
+        </div>
+        <h4 style="color:#86efac; font-size:1.05rem;">Probar y entregar</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          Prueba cruzada en celular, checklist de 6 preguntas, buenas prácticas y V/F.
+        </p>
+      </div>
+      <div style="margin-top:0.8rem; font-size:0.74rem; color:#86efac; font-weight:700;">⏱ 13 min · Go-to-Live</div>
+    </div>
 
   </div>
 
-  <div class="highlight-box fragment cyan" style="max-width:1120px; margin:1.1rem auto 0; font-size:0.92rem;">
-    <strong>🎯 Objetivo de salida:</strong> te llevás tu plantilla personalizada, guardada en GitHub, publicada con URL real en Vercel, probada desde el celular de un compañero y lista para escalar con agentes y datos.
+  <div class="highlight-box cyan" style="max-width:1160px;">
+    <strong>🎯 Te llevás hoy:</strong> Plantilla personalizada + versión guardada en GitHub + URL en vivo en Vercel probada desde el celular.
   </div>
 
 </section>
@@ -501,40 +512,49 @@
 
     <h2>Primero el <span class="text-gradient">producto</span>, después la herramienta</h2>
 
-    <p style="font-size:1.05rem; color:var(--text-muted); max-width:920px; margin:0 auto 1.2rem;">
-      Antes de pedirle una pantalla a la IA, definí con claridad estos <strong style="color:var(--secondary);">tres pilares</strong>:
+    <p style="font-size:0.96rem; color:var(--text-muted); margin:0 auto 1rem;">
+      Antes de pedirle una pantalla a la IA, definí estos <strong style="color:var(--secondary);">3 puntos en una frase</strong>:
     </p>
 
-    <div class="grid-3" style="max-width:1140px; margin:0 auto;">
+    <div class="grid-3" style="max-width:1120px; margin:0 auto;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--primary); text-align:left;">
-        <div style="font-size:0.72rem; color:#d4baff; text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:0.35rem;">1. Usuario</div>
-        <h3 style="font-size:1.3rem; margin-bottom:0.5rem;"><i class="fa-solid fa-user-check" style="color:var(--primary);"></i> ¿Quién la usa?</h3>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Pensá en una persona real y en qué contexto entra (por ejemplo, un cliente desde su celular buscando una respuesta rápida).
+      <div class="glass-card" style="border-top:4px solid var(--primary); text-align:left;">
+        <span class="badge-mini" style="color:#d4baff; margin-bottom:0.55rem;">1. USUARIO</span>
+        <h3 style="font-size:1.3rem; margin-bottom:0.35rem;">¿Quién la usa?</h3>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0 0 0.7rem;">
+          La persona concreta y desde dónde entra (casi siempre desde el celular).
         </p>
+        <div style="font-size:0.78rem; color:#d4baff; border-top:1px solid var(--glass-border); padding-top:0.5rem;">
+          Ej: Dueño de tienda que recibe 50 consultas/día.
+        </div>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left;">
-        <div style="font-size:0.72rem; color:var(--secondary); text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:0.35rem;">2. Problema</div>
-        <h3 style="font-size:1.3rem; margin-bottom:0.5rem;"><i class="fa-solid fa-fire-flame-curved" style="color:var(--secondary);"></i> ¿Qué necesidad resuelve?</h3>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Qué dolor puntual, duda o tarea repetitiva le estás ahorrando en menos de un minuto.
+      <div class="glass-card" style="border-top:4px solid var(--secondary); text-align:left;">
+        <span class="badge-mini" style="color:var(--secondary); margin-bottom:0.55rem;">2. PROBLEMA</span>
+        <h3 style="font-size:1.3rem; margin-bottom:0.35rem;">¿Qué dolor resuelve?</h3>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0 0 0.7rem;">
+          La necesidad puntual o tiempo operativo que le ahorrás hoy.
         </p>
+        <div style="font-size:0.78rem; color:var(--secondary); border-top:1px solid var(--glass-border); padding-top:0.5rem;">
+          Ej: Cotizar envíos o responder stock al instante.
+        </div>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left;">
-        <div style="font-size:0.72rem; color:var(--accent); text-transform:uppercase; letter-spacing:0.1em; font-weight:700; margin-bottom:0.35rem;">3. Acción Principal</div>
-        <h3 style="font-size:1.3rem; margin-bottom:0.5rem;"><i class="fa-solid fa-hand-pointer" style="color:var(--accent);"></i> ¿Qué tiene que hacer?</h3>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          El único botón o paso clave de la pantalla: reservar un turno, hacer una consulta al agente o dejar su contacto.
+      <div class="glass-card" style="border-top:4px solid var(--accent); text-align:left;">
+        <span class="badge-mini" style="color:#fcd34d; margin-bottom:0.55rem;">3. ACCIÓN PRINCIPAL</span>
+        <h3 style="font-size:1.3rem; margin-bottom:0.35rem;">¿Qué tiene que hacer?</h3>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0 0 0.7rem;">
+          El único botón o paso clave que define que la visita valió la pena.
         </p>
+        <div style="font-size:0.78rem; color:#fcd34d; border-top:1px solid var(--glass-border); padding-top:0.5rem;">
+          Ej: Botón "Probar diagnóstico en 30 segundos".
+        </div>
       </div>
 
     </div>
 
-    <div class="highlight-box fragment amber" style="max-width:1140px; margin:1.1rem auto 0; font-size:0.92rem;">
-      <strong>💡 Regla de UX:</strong> Para que una app sea útil <strong>no alcanza con agregar muchas funciones</strong>. Lo principal es que resuelva una necesidad concreta y que la acción principal sea obvia en 3 segundos.
+    <div class="highlight-box amber" style="max-width:1120px;">
+      <strong>💡 Regla de oro (UX):</strong> Agregar muchas funciones <strong>no hace que una app sea más útil</strong>. Gana la que resuelve una necesidad clara con una acción principal obvia.
     </div>
 
   </section>
@@ -546,49 +566,48 @@
 
     <h2>Lo que <span class="text-gradient">se ve</span> vs. lo que <span class="text-gradient-amber">funciona detrás</span></h2>
 
-    <div class="grid-2" style="max-width:1140px; margin:0.8rem auto 1rem;">
+    <div class="grid-2" style="max-width:1120px; margin:0.7rem auto 0.95rem;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left; padding:1.25rem 1.5rem;">
-        <h4 style="color:var(--secondary); margin-bottom:0.45rem; font-size:1.05rem;">
-          <i class="fa-solid fa-desktop"></i> Front-End · Lo que ve y usa la persona
-        </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Es la "vidriera y el mostrador": diseño, textos, botones, formularios y cómo se adapta la pantalla al celular.
+      <div class="glass-card" style="border-top:4px solid var(--secondary); text-align:left; padding:1.1rem 1.4rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+          <h4 style="color:var(--secondary); margin:0; font-size:1.1rem;"><i class="fa-solid fa-desktop"></i> Front-End</h4>
+          <span class="badge-mini" style="color:var(--secondary);">Lo que ve y usa la persona</span>
+        </div>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          Pantallas, textos, diseño, botones y formularios (la vidriera).
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--primary); text-align:left; padding:1.25rem 1.5rem;">
-        <h4 style="color:#d4baff; margin-bottom:0.45rem; font-size:1.05rem;">
-          <i class="fa-solid fa-server"></i> Back-End · Lógica, conexiones y datos
-        </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Es la "cocina": donde corre el agente de IA, se validan usuarios (login), se conectan APIs y se guarda la información en la base de datos.
+      <div class="glass-card" style="border-top:4px solid var(--primary); text-align:left; padding:1.1rem 1.4rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+          <h4 style="color:#d4baff; margin:0; font-size:1.1rem;"><i class="fa-solid fa-server"></i> Back-End</h4>
+          <span class="badge-mini" style="color:#d4baff;">Lógica, conexiones y datos</span>
+        </div>
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          Agentes de IA, validación de usuarios (login), APIs y base de datos (la cocina).
         </p>
       </div>
 
     </div>
 
-    <div class="grid-3" style="max-width:1140px; margin:0 auto;">
+    <div class="grid-3" style="max-width:1120px; margin:0 auto;">
 
-      <div class="glass-card fragment" style="padding:1.1rem 1.3rem; text-align:left; border-top:3px solid var(--green);">
-        <h4 style="color:var(--green); font-size:0.95rem; margin-bottom:0.35rem;">1. Landing Page</h4>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin:0; line-height:1.45;">
-          <strong>1 sola pantalla + 1 acción principal.</strong> Ideal para presentar una propuesta, validar interés o captar registros rápido.
-        </p>
+      <div class="glass-card" style="padding:1rem 1.25rem; text-align:left; border-top:3px solid var(--green);">
+        <h4 style="color:var(--green); font-size:0.98rem; margin-bottom:0.25rem;">1. Landing Page</h4>
+        <strong style="font-size:0.83rem; color:var(--text-main); display:block; margin-bottom:0.2rem;">1 pantalla + 1 acción principal</strong>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">Para validar una idea o captar interesados rápido.</p>
       </div>
 
-      <div class="glass-card fragment" style="padding:1.1rem 1.3rem; text-align:left; border-top:3px solid var(--secondary);">
-        <h4 style="color:var(--secondary); font-size:0.95rem; margin-bottom:0.35rem;">2. Sitio Web</h4>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin:0; line-height:1.45;">
-          <strong>Varias páginas o secciones</strong> para organizar información, catálogo o servicios con navegación clara.
-        </p>
+      <div class="glass-card" style="padding:1rem 1.25rem; text-align:left; border-top:3px solid var(--secondary);">
+        <h4 style="color:var(--secondary); font-size:0.98rem; margin-bottom:0.25rem;">2. Sitio Web</h4>
+        <strong style="font-size:0.83rem; color:var(--text-main); display:block; margin-bottom:0.2rem;">Varias secciones y navegación</strong>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">Para mostrar servicios, catálogo o información institucional.</p>
       </div>
 
-      <div class="glass-card fragment" style="padding:1.1rem 1.3rem; text-align:left; border-top:3px solid var(--accent);">
-        <h4 style="color:var(--accent); font-size:0.95rem; margin-bottom:0.35rem;">3. Aplicación (App)</h4>
-        <p style="font-size:0.82rem; color:var(--text-muted); margin:0; line-height:1.45;">
-          <strong>Interactiva y personalizada:</strong> suma lógica con agentes, cuentas de usuario (login) y base de datos propia.
-        </p>
+      <div class="glass-card" style="padding:1rem 1.25rem; text-align:left; border-top:3px solid var(--accent);">
+        <h4 style="color:var(--accent); font-size:0.98rem; margin-bottom:0.25rem;">3. Aplicación (App)</h4>
+        <strong style="font-size:0.83rem; color:var(--text-main); display:block; margin-bottom:0.2rem;">Pantallas + Agente + Login + Datos</strong>
+        <p style="font-size:0.78rem; color:var(--text-muted); margin:0;">Producto interactivo donde cada usuario tiene su cuenta.</p>
       </div>
 
     </div>
@@ -598,47 +617,56 @@
   <!-- Slide 3.3: Herramientas de IA según la necesidad -->
   <section>
 
-    <span class="glass-pill"><i class="fa-solid fa-wand-magic-sparkles"></i> MAPA DE HERRAMIENTAS</span>
+    <span class="glass-pill"><i class="fa-solid fa-wand-magic-sparkles"></i> MAPA DE HERRAMIENTAS 2026</span>
 
-    <h2>Elegir la herramienta según <span class="text-gradient">lo que necesita el proyecto</span></h2>
+    <h2>¿Qué herramienta elegir <span class="text-gradient">según tu proyecto</span>?</h2>
 
-    <p style="font-size:0.98rem; color:var(--text-muted); max-width:940px; margin:0 auto 1rem;">
-      Primero definimos si necesitamos <strong style="color:var(--text-main);">pantallas, lógica, datos o usuarios</strong>; luego elegimos o combinamos:
+    <p style="font-size:0.92rem; color:var(--text-muted); margin:0 auto 0.95rem;">
+      Primero definís si necesitás <strong style="color:var(--text-main);">pantallas, lógica, datos o usuarios</strong>; después elegís o combinás:
     </p>
 
-    <div class="grid-3" style="max-width:1160px; margin:0 auto;">
+    <div class="grid-3" style="max-width:1120px; margin:0 auto; text-align:left;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left;">
-        <span class="glass-pill cyan" style="font-size:0.68rem; margin-bottom:0.5rem;">PANTALLAS E IDEAS RÁPIDAS</span>
-        <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">v0 · Gemini Canvas</h3>
-        <ul class="premium-list" style="font-size:0.84rem;">
-          <li><i class="fa-solid fa-bolt"></i> De una descripción a una interfaz visual en segundos.</li>
-          <li><i class="fa-solid fa-eye"></i> Ideales para bocetar el Front-End y probar cómo se ve la idea.</li>
-        </ul>
+      <div class="glass-card" style="border-top:4px solid var(--secondary); display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem;">
+        <div>
+          <span class="badge-mini" style="color:var(--secondary); margin-bottom:0.45rem;">1. Interfaz y Prototipos</span>
+          <h3 style="font-size:1.35rem; margin:0 0 0.3rem;">v0 · Gemini Canvas</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">De una idea escrita a una pantalla interactiva en segundos.</p>
+        </div>
+        <div style="border-top:1px solid var(--glass-border); padding-top:0.65rem;">
+          <span style="font-size:0.7rem; font-weight:700; color:var(--secondary); text-transform:uppercase;">🎯 Cuándo usarlas</span>
+          <strong style="font-size:0.86rem; color:var(--text-main); display:block; margin-top:0.15rem;">Bocetar Front-End y validar diseño rápido</strong>
+        </div>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left;">
-        <span class="glass-pill amber" style="font-size:0.68rem; margin-bottom:0.5rem;">APP COMPLETA EN NAVEGADOR</span>
-        <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">Lovable</h3>
-        <ul class="premium-list" style="font-size:0.84rem;">
-          <li><i class="fa-solid fa-layer-group"></i> Crea pantallas + base de datos + login conversando en el navegador.</li>
-          <li><i class="fa-solid fa-code-branch"></i> Se sincroniza directo con GitHub para seguir editando.</li>
-        </ul>
+      <div class="glass-card" style="border-top:4px solid var(--accent); display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem;">
+        <div>
+          <span class="badge-mini" style="color:#fcd34d; margin-bottom:0.45rem;">2. Full-Stack Visual</span>
+          <h3 style="font-size:1.35rem; margin:0 0 0.3rem;">Lovable</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">Arma pantallas, base de datos y login desde el navegador.</p>
+        </div>
+        <div style="border-top:1px solid var(--glass-border); padding-top:0.65rem;">
+          <span style="font-size:0.7rem; font-weight:700; color:#fcd34d; text-transform:uppercase;">🎯 Cuándo usarla</span>
+          <strong style="font-size:0.86rem; color:var(--text-main); display:block; margin-top:0.15rem;">MVP completo con usuarios y datos sin tocar código</strong>
+        </div>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--primary); text-align:left;">
-        <span class="glass-pill" style="font-size:0.68rem; margin-bottom:0.5rem;">CONSTRUCCIÓN Y LÓGICA A MEDIDA</span>
-        <h3 style="font-size:1.2rem; margin-bottom:0.5rem;">Claude Code · Antigravity · Codex</h3>
-        <ul class="premium-list" style="font-size:0.84rem;">
-          <li><i class="fa-solid fa-gears"></i> Trabajan directo sobre los archivos del proyecto y GitHub.</li>
-          <li><i class="fa-solid fa-robot"></i> Máximo control para conectar agentes, APIs y automatizaciones.</li>
-        </ul>
+      <div class="glass-card" style="border-top:4px solid var(--primary); display:flex; flex-direction:column; justify-content:space-between; gap:0.85rem;">
+        <div>
+          <span class="badge-mini" style="color:#d4baff; margin-bottom:0.45rem;">3. Agentes y Control Total</span>
+          <h3 style="font-size:1.35rem; margin:0 0 0.3rem;">Claude Code · Antigravity · Codex</h3>
+          <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">Trabajan directo sobre tu repo, conectan MCPs y corren rutinas.</p>
+        </div>
+        <div style="border-top:1px solid var(--glass-border); padding-top:0.65rem;">
+          <span style="font-size:0.7rem; font-weight:700; color:#d4baff; text-transform:uppercase;">🎯 Cuándo usarlas</span>
+          <strong style="font-size:0.86rem; color:var(--text-main); display:block; margin-top:0.15rem;">Iterar el proyecto en GitHub y conectar agentes</strong>
+        </div>
       </div>
 
     </div>
 
-    <div class="highlight-box fragment green" style="max-width:1160px; margin:1rem auto 0; font-size:0.9rem;">
-      <strong>✅ Buena práctica:</strong> No hay una única herramienta para todo. Podés arrancar tu diseño con <strong>v0 o una plantilla</strong>, guardarlo en <strong>GitHub</strong> y darle lógica con <strong>Claude Code o Antigravity</strong>.
+    <div class="highlight-box green" style="max-width:1120px;">
+      <strong>💡 Combinación recomendada:</strong> Podés generar la primera pantalla en <strong>v0 / Lovable</strong>, conectarla a <strong>GitHub</strong> y evolucionarla con <strong>Claude Code o Antigravity</strong>.
     </div>
 
   </section>
@@ -646,37 +674,34 @@
   <!-- Slide 3.4: Cómo escribir un pedido claro -->
   <section>
 
-    <span class="glass-pill green"><i class="fa-solid fa-pen-ruler"></i> PEDIDO CLARO</span>
+    <span class="glass-pill green"><i class="fa-solid fa-pen-ruler"></i> PROMPT DE PRODUCTO</span>
 
-    <h2>Cómo pedirle tu app a la IA <span class="text-gradient-green">sin vueltas</span></h2>
+    <h2>Cómo escribir un <span class="text-gradient-green">pedido claro</span></h2>
 
-    <div class="grid-2" style="max-width:1150px; margin:1rem auto; align-items:center;">
+    <div class="grid-2" style="max-width:1120px; margin:0.9rem auto; align-items:center;">
 
-      <div class="glass-card fragment" style="text-align:left; border-top:4px solid var(--green);">
-        <h4 style="color:var(--green); margin-bottom:0.8rem; font-size:1.05rem;">
-          <i class="fa-solid fa-list-check"></i> Estructura en 4 líneas
+      <div class="glass-card" style="text-align:left; border-top:4px solid var(--green);">
+        <h4 style="color:var(--green); margin-bottom:0.75rem; font-size:1.05rem;">
+          <i class="fa-solid fa-list-check"></i> Los 4 datos que nunca pueden faltar
         </h4>
-        <ul class="premium-list" style="font-size:0.88rem;">
-          <li><i class="fa-solid fa-1" style="color:var(--green);"></i> <strong>Usuario:</strong> quién entra y desde qué dispositivo (celular/web).</li>
-          <li><i class="fa-solid fa-2" style="color:var(--green);"></i> <strong>Problema:</strong> qué quiere resolver rápido.</li>
-          <li><i class="fa-solid fa-3" style="color:var(--green);"></i> <strong>Acción principal:</strong> cuál es el único botón o formulario clave.</li>
-          <li><i class="fa-solid fa-4" style="color:var(--green);"></i> <strong>Límites:</strong> diseño simple, limpio, sin agregar secciones de relleno.</li>
+        <ul class="premium-list">
+          <li><i class="fa-solid fa-1" style="color:var(--green);"></i> <strong>Usuario:</strong> para quién es y desde dónde abre la web.</li>
+          <li><i class="fa-solid fa-2" style="color:var(--green);"></i> <strong>Problema:</strong> qué resuelve en una sola frase.</li>
+          <li><i class="fa-solid fa-3" style="color:var(--green);"></i> <strong>Acción principal:</strong> texto exacto del botón clave.</li>
+          <li><i class="fa-solid fa-4" style="color:var(--green);"></i> <strong>Restricción:</strong> "simple, limpio y cómodo en celular".</li>
         </ul>
       </div>
 
-      <div class="fragment">
-        <pre class="glass-code"><strong style="color:var(--secondary);">Ejemplo de pedido claro:</strong>
+      <pre class="glass-code"><strong style="color:var(--secondary);"># Plantilla de pedido a la IA</strong>
 
-"Personalizá esta plantilla para una landing
-dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que quieren
-<span style="color:#86efac;">automatizar respuestas frecuentes por WhatsApp</span>.
+"Adaptá esta plantilla para <span style="color:#fcd34d;">dueños de eCommerce</span>
+que quieren <span style="color:#86efac;">automatizar atención por WhatsApp</span>:
 
-- <strong style="color:var(--text-main);">Título claro:</strong> enfocá en el ahorro de tiempo.
-- <strong style="color:var(--text-main);">Acción principal:</strong> un único botón destacado
-  'Probar diagnóstico gratis' que abra el formulario.
-- <strong style="color:var(--text-main);">Regla UX:</strong> mantenela simple, limpia y cómoda
-  para usar desde el celular, sin bloques extra."</pre>
-      </div>
+1. <strong style="color:var(--text-main);">Título:</strong> directo al ahorro de tiempo.
+2. <strong style="color:var(--text-main);">Acción principal:</strong> un único botón
+   'Probar diagnóstico gratis' bien visible.
+3. <strong style="color:var(--text-main);">Diseño:</strong> limpio, lectura rápida en celular,
+   sin secciones de relleno."</pre>
 
     </div>
 
@@ -697,43 +722,39 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
 
     <h2>GitHub: versiones, equipo y <span class="text-gradient">rutinas de agentes</span></h2>
 
-    <p style="font-size:1rem; color:var(--text-muted); max-width:940px; margin:0 auto 1.1rem;">
-      GitHub es el lugar donde vive tu proyecto: guarda cada versión, permite trabajar en equipo y conecta agentes automáticos.
-    </p>
+    <div class="grid-3" style="max-width:1120px; margin:1rem auto 0;">
 
-    <div class="grid-3" style="max-width:1150px; margin:0 auto;">
-
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left;">
-        <h4 style="color:var(--secondary); font-size:1rem; margin-bottom:0.5rem;">
-          <i class="fa-solid fa-clock-rotate-left"></i> 1. Guardar versiones
+      <div class="glass-card" style="border-top:4px solid var(--secondary); text-align:left;">
+        <h4 style="color:var(--secondary); font-size:1.05rem; margin-bottom:0.45rem;">
+          <i class="fa-solid fa-clock-rotate-left"></i> 1. Versiones (Commits)
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Cada cambio queda registrado con fecha y autor (<em>commit</em>). Si algo falla al editar, podés volver a la versión que funcionaba en segundos.
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          Guarda cada cambio como un punto de control. Si algo se rompe, volvés atrás en un clic.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--primary); text-align:left;">
-        <h4 style="color:#d4baff; font-size:1rem; margin-bottom:0.5rem;">
-          <i class="fa-solid fa-users"></i> 2. Colaborar en el proyecto
+      <div class="glass-card" style="border-top:4px solid var(--primary); text-align:left;">
+        <h4 style="color:#d4baff; font-size:1.05rem; margin-bottom:0.45rem;">
+          <i class="fa-solid fa-users"></i> 2. Trabajo colaborativo
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Varias personas pueden aportar al mismo repositorio, editar archivos compartidos o enviar propuestas de cambio para revisar antes de publicar.
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          Varias personas (o agentes) editan el mismo proyecto y proponen cambios para revisar.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left;">
-        <h4 style="color:var(--accent); font-size:1rem; margin-bottom:0.5rem;">
+      <div class="glass-card" style="border-top:4px solid var(--accent); text-align:left;">
+        <h4 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.45rem;">
           <i class="fa-solid fa-robot"></i> 3. Rutinas de Agentes
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Configurando instrucciones y permisos, un agente puede ejecutar tareas periódicas o ante eventos (con <strong>Claude Code routines, GitHub Actions, n8n o Make</strong>).
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          Tareas automáticas por horario o evento con <strong>Claude Code Routines, GitHub Actions, n8n o Make</strong>.
         </p>
       </div>
 
     </div>
 
-    <div class="highlight-box fragment cyan" style="max-width:1150px; margin:1.1rem auto 0; font-size:0.9rem;">
-      <strong>🔑 Clave para recordar:</strong> Para que un agente trabaje automáticamente sobre GitHub no es magia: hay que configurar <strong>sus instrucciones, el acceso al proyecto y una rutina</strong> (horaria o por evento).
+    <div class="highlight-box cyan" style="max-width:1120px;">
+      <strong>🔑 Qué necesita un agente para trabajar solo en GitHub:</strong> configurar sus <strong>instrucciones</strong>, el <strong>acceso al repositorio</strong> y una <strong>rutina</strong>.
     </div>
 
   </section>
@@ -741,65 +762,61 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
   <!-- Slide 4.2: EN VIVO — Cómo agregar colaboradores en GitHub -->
   <section>
 
-    <span class="glass-pill amber"><i class="fa-solid fa-user-plus"></i> DEMO EN VIVO · COLABORACIÓN EN GITHUB</span>
+    <span class="glass-pill amber"><i class="fa-solid fa-user-plus"></i> DEMO EN VIVO · COLABORAR EN UN MISMO PROYECTO</span>
 
-    <h2>Cómo sumar <span class="text-gradient-amber">colaboradores</span> a un mismo proyecto</h2>
+    <h2>Cómo sumar <span class="text-gradient-amber">colaboradores</span> en GitHub</h2>
 
-    <p style="font-size:0.98rem; color:var(--text-muted); max-width:920px; margin:0 auto 0.9rem;">
-      Así invitamos en vivo a un compañero para que dos o más personas editen el mismo repositorio:
-    </p>
+    <div class="step-flow">
 
-    <div class="step-flow" style="margin:0.8rem 0 1.2rem;">
-
-      <div class="step-node fragment cyan">
-        <i class="fa-solid fa-gear" style="color:var(--secondary); font-size:1.2rem; margin-bottom:0.3rem;"></i><br>
-        <strong>1. Settings</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Abrí tu repo en GitHub<br>y entrá a Configuración</span>
+      <div class="step-node cyan">
+        <i class="fa-solid fa-gear" style="color:var(--secondary); font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>1. Settings</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Arriba a la derecha en tu repositorio</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment primary">
-        <i class="fa-solid fa-users-gear" style="color:#d4baff; font-size:1.2rem; margin-bottom:0.3rem;"></i><br>
-        <strong>2. Collaborators</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Menú izquierdo →<br>botón <em>Add people</em></span>
+      <div class="step-node primary">
+        <i class="fa-solid fa-users-gear" style="color:#d4baff; font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>2. Collaborators</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Menú izquierdo → botón <em>Add people</em></span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment amber">
-        <i class="fa-solid fa-envelope-open-text" style="color:var(--accent); font-size:1.2rem; margin-bottom:0.3rem;"></i><br>
-        <strong>3. Invitar usuario</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Ingresá su usuario o mail<br>y acepta la invitación</span>
+      <div class="step-node amber">
+        <i class="fa-solid fa-envelope-open-text" style="color:var(--accent); font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>3. Invitar compañero</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Por usuario o email y acepta el link</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment green">
-        <i class="fa-solid fa-code-commit" style="color:var(--green); font-size:1.2rem; margin-bottom:0.3rem;"></i><br>
-        <strong>4. Editar juntos</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Ambos guardan cambios<br>y actualizan la web</span>
+      <div class="step-node green">
+        <i class="fa-solid fa-code-commit" style="color:var(--green); font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>4. Editar juntos</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Ambos guardan cambios en el proyecto</span>
       </div>
 
     </div>
 
-    <div class="grid-2" style="max-width:1140px; margin:0 auto;">
+    <div class="grid-2" style="max-width:1120px; margin:0.9rem auto 0;">
 
-      <div class="glass-card fragment" style="padding:1.15rem 1.4rem; text-align:left; border-top:3px solid var(--green);">
-        <h4 style="color:var(--green); font-size:0.95rem; margin-bottom:0.35rem;">
-          <i class="fa-solid fa-bolt"></i> Edición directa (Equipos chicos / Práctica de hoy)
+      <div class="glass-card" style="padding:1rem 1.35rem; text-align:left; border-top:3px solid var(--green);">
+        <h4 style="color:var(--green); font-size:0.95rem; margin-bottom:0.25rem;">
+          <i class="fa-solid fa-bolt"></i> Modo directo (Práctica en parejas)
         </h4>
-        <p style="font-size:0.83rem; color:var(--text-muted); margin:0; line-height:1.45;">
-          Tu compañero edita desde GitHub o su editor, guarda la versión (<em>Commit</em>) y el cambio impacta directo en el proyecto compartido.
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">
+          Guardan cambios directo en la rama principal (<code>main</code>) y la web se actualiza al instante.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="padding:1.15rem 1.4rem; text-align:left; border-top:3px solid var(--secondary);">
-        <h4 style="color:var(--secondary); font-size:0.95rem; margin-bottom:0.35rem;">
-          <i class="fa-solid fa-code-pull-request"></i> Propuesta con revisión (Pull Request)
+      <div class="glass-card" style="padding:1rem 1.35rem; text-align:left; border-top:3px solid var(--secondary);">
+        <h4 style="color:var(--secondary); font-size:0.95rem; margin-bottom:0.25rem;">
+          <i class="fa-solid fa-code-pull-request"></i> Modo revisión (Pull Request)
         </h4>
-        <p style="font-size:0.83rem; color:var(--text-muted); margin:0; line-height:1.45;">
-          Una persona (o un agente autónomo) propone un cambio en una rama separada para que el dueño lo revise en una vista previa antes de aprobarlo.
+        <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">
+          Un compañero o agente propone un cambio aparte; lo probás en <em>Vista Previa</em> antes de aprobarlo.
         </p>
       </div>
 
@@ -810,61 +827,61 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
   <!-- Slide 4.3: Conectar GitHub a Vercel + Vista Previa vs Producción -->
   <section>
 
-    <span class="glass-pill cyan"><i class="fa-solid fa-globe"></i> DE GITHUB A VERCEL</span>
+    <span class="glass-pill cyan"><i class="fa-solid fa-globe"></i> PUBLICACIÓN AUTOMÁTICA</span>
 
-    <h2>Publicar en vivo: <span class="text-gradient">Vista Previa</span> vs. <span class="text-gradient-green">Producción</span></h2>
+    <h2>GitHub → Vercel: <span class="text-gradient">Vista Previa</span> vs. <span class="text-gradient-green">Producción</span></h2>
 
-    <div class="step-flow" style="margin:0.9rem 0 1.2rem;">
+    <div class="step-flow">
 
-      <div class="step-node fragment primary">
-        <i class="fa-solid fa-file-code" style="color:#d4baff;"></i><br>
-        <strong>1. Plantilla + IA</strong><br>
-        <span style="font-size:0.73rem; color:var(--text-muted);">Personalizás textos y diseño</span>
+      <div class="step-node primary">
+        <i class="fa-solid fa-wand-magic-sparkles" style="color:#d4baff; font-size:1.2rem; margin-bottom:0.3rem;"></i>
+        <strong>1. Editás con IA</strong>
+        <span style="font-size:0.74rem; color:var(--text-muted);">Cambiás título o botón</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment cyan">
-        <i class="fa-brands fa-github" style="color:var(--secondary);"></i><br>
-        <strong>2. GitHub</strong><br>
-        <span style="font-size:0.73rem; color:var(--text-muted);">Guardás la nueva versión</span>
+      <div class="step-node cyan">
+        <i class="fa-brands fa-github" style="color:var(--secondary); font-size:1.2rem; margin-bottom:0.3rem;"></i>
+        <strong>2. Commit en GitHub</strong>
+        <span style="font-size:0.74rem; color:var(--text-muted);">Se guarda la versión</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment amber">
-        <i class="fa-solid fa-triangle-exclamation" style="color:var(--accent); transform:rotate(0deg);"></i><br>
-        <strong>3. Vercel</strong><br>
-        <span style="font-size:0.73rem; color:var(--text-muted);">Detecta el cambio y publica</span>
+      <div class="step-node amber">
+        <i class="fa-solid fa-bolt" style="color:var(--accent); font-size:1.2rem; margin-bottom:0.3rem;"></i>
+        <strong>3. Vercel construye</strong>
+        <span style="font-size:0.74rem; color:var(--text-muted);">Detecta el cambio solo</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment green">
-        <i class="fa-solid fa-mobile-screen-button" style="color:var(--green);"></i><br>
-        <strong>4. URL Pública</strong><br>
-        <span style="font-size:0.73rem; color:var(--text-muted);">Disponible en todo el mundo</span>
+      <div class="step-node green">
+        <i class="fa-solid fa-mobile-screen-button" style="color:var(--green); font-size:1.2rem; margin-bottom:0.3rem;"></i>
+        <strong>4. URL en Vivo</strong>
+        <span style="font-size:0.74rem; color:var(--text-muted);">Lista en 20 segundos</span>
       </div>
 
     </div>
 
-    <div class="grid-2" style="max-width:1140px; margin:0 auto;">
+    <div class="grid-2" style="max-width:1120px; margin:0.9rem auto 0;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left; padding:1.25rem 1.5rem;">
-        <h4 style="color:var(--accent); margin-bottom:0.4rem; font-size:1.02rem;">
+      <div class="glass-card" style="border-top:4px solid var(--accent); text-align:left; padding:1.1rem 1.4rem;">
+        <h4 style="color:var(--accent); margin-bottom:0.3rem; font-size:1.02rem;">
           <i class="fa-solid fa-flask"></i> Vista Previa (Preview) = Prueba
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Cada vez que un colaborador o un agente propone un cambio, Vercel crea un <strong>enlace temporal de prueba</strong> para revisarlo sin tocar la web oficial.
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          URL temporal para probar cambios nuevos sin afectar lo que ven tus usuarios actuales.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--green); text-align:left; padding:1.25rem 1.5rem;">
-        <h4 style="color:var(--green); margin-bottom:0.4rem; font-size:1.02rem;">
+      <div class="glass-card" style="border-top:4px solid var(--green); text-align:left; padding:1.1rem 1.4rem;">
+        <h4 style="color:var(--green); margin-bottom:0.3rem; font-size:1.02rem;">
           <i class="fa-solid fa-circle-check"></i> Producción (Production) = Usuarios reales
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Cuando el cambio se aprueba en la rama principal (<code>main</code>), Vercel actualiza automáticamente el <strong>enlace principal que usan tus clientes</strong>.
+        <p style="font-size:0.84rem; color:var(--text-muted); margin:0;">
+          La URL oficial y pública que compartís con tus clientes cuando el cambio está aprobado.
         </p>
       </div>
 
@@ -875,36 +892,48 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
   <!-- Slide 4.4: Práctica guiada #1 -->
   <section>
 
-    <span class="glass-pill green"><i class="fa-solid fa-hammer"></i> PRÁCTICA GUIADA · PARTE 1</span>
+    <span class="glass-pill green"><i class="fa-solid fa-hammer"></i> PRÁCTICA EN VIVO · 15 MIN</span>
 
-    <h2>De la plantilla a tu <span class="text-gradient-green">URL publicada</span></h2>
+    <h2>Publicá tu plantilla y <span class="text-gradient-green">comprobá un cambio</span></h2>
 
-    <div class="grid-2" style="max-width:1140px; margin:1rem auto;">
+    <div class="grid-4" style="max-width:1140px; margin:1.1rem auto; text-align:left;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left;">
-        <h4 style="color:var(--secondary); margin-bottom:0.75rem; font-size:1.05rem;">
-          <i class="fa-solid fa-list-ol"></i> Lo hacemos paso a paso ahora:
-        </h4>
-        <ul class="premium-list" style="font-size:0.88rem;">
-          <li><i class="fa-solid fa-1"></i> <strong>Tomar la plantilla base</strong> en GitHub (individual o invitando a tu compañero como colaborador).</li>
-          <li><i class="fa-solid fa-2"></i> <strong>Conectar el repo en Vercel</strong> (<em>Add New Project → Import</em>) y abrir el enlace público.</li>
-          <li><i class="fa-solid fa-3"></i> <strong>Cambiar el título y la acción principal</strong> según el usuario y problema que definiste.</li>
-          <li><i class="fa-solid fa-4"></i> <strong>Guardar versión (Commit)</strong> y refrescar la URL de Vercel para comprobar el cambio en vivo.</li>
-        </ul>
-      </div>
-
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left; display:flex; flex-direction:column; justify-content:center;">
-        <h4 style="color:var(--accent); margin-bottom:0.6rem; font-size:1.05rem;">
-          <i class="fa-solid fa-check-double"></i> ¿Qué comprobamos en este punto?
-        </h4>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin:0 0 0.9rem; line-height:1.5;">
-          Que ya tenés el circuito profesional completo funcionando: cada vez que vos, un colaborador o un agente guardan un cambio en GitHub, tu sitio en vivo se actualiza solo en menos de 30 segundos.
+      <div class="glass-card" style="border-top:4px solid var(--primary);">
+        <span class="badge-mini" style="color:#d4baff; margin-bottom:0.5rem;">PASO 1</span>
+        <h4 style="font-size:1rem;">Abrir plantilla</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          Copiá la plantilla en GitHub e invitá a tu compañero en <em>Collaborators</em>.
         </p>
-        <div class="highlight-box green" style="margin:0; font-size:0.85rem;">
-          <strong>✅ Criterio cumplido:</strong> Versión guardada en GitHub + URL de Vercel actualizada.
-        </div>
       </div>
 
+      <div class="glass-card" style="border-top:4px solid var(--secondary);">
+        <span class="badge-mini" style="color:var(--secondary); margin-bottom:0.5rem;">PASO 2</span>
+        <h4 style="font-size:1rem;">Conectar Vercel</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          Importá el repositorio en Vercel y abrí tu enlace público.
+        </p>
+      </div>
+
+      <div class="glass-card" style="border-top:4px solid var(--accent);">
+        <span class="badge-mini" style="color:#fcd34d; margin-bottom:0.5rem;">PASO 3</span>
+        <h4 style="font-size:1rem;">Personalizar</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          Cambiá el <strong>título</strong> y el texto de la <strong>acción principal</strong>.
+        </p>
+      </div>
+
+      <div class="glass-card" style="border-top:4px solid var(--green);">
+        <span class="badge-mini" style="color:#86efac; margin-bottom:0.5rem;">PASO 4</span>
+        <h4 style="font-size:1rem;">Guardar y verificar</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">
+          Hacé <em>Commit</em> en GitHub y recargá la URL para ver el cambio publicado.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="highlight-box green" style="max-width:1140px;">
+      <strong>✅ Check de esta etapa:</strong> URL activa en Vercel mostrando tu nuevo título y botón principal.
     </div>
 
   </section>
@@ -920,50 +949,50 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
   <!-- Slide 5.1: La app por dentro -->
   <section>
 
-    <span class="glass-pill amber"><i class="fa-solid fa-diagram-project"></i> MÓDULO 3 · SUMAR AGENTES, LOGIN Y DATOS</span>
+    <span class="glass-pill amber"><i class="fa-solid fa-diagram-project"></i> MÓDULO 3 · LA APP POR DENTRO</span>
 
-    <h2>La app por dentro: <span class="text-gradient">el viaje de una consulta</span></h2>
+    <h2>El recorrido completo de <span class="text-gradient">una consulta</span></h2>
 
-    <p style="font-size:1rem; color:var(--text-muted); max-width:920px; margin:0 auto 1rem;">
-      Cuando pasamos de una landing a una aplicación completa, así viaja cada acción del usuario:
+    <p style="font-size:0.95rem; color:var(--text-muted); margin:0 auto 0.9rem;">
+      Qué pasa detrás de escena cuando un usuario toca el botón principal de tu app:
     </p>
 
-    <div class="step-flow" style="margin:1rem 0 1.3rem;">
+    <div class="step-flow">
 
-      <div class="step-node fragment cyan">
-        <i class="fa-solid fa-window-maximize" style="color:var(--secondary); font-size:1.25rem; margin-bottom:0.35rem;"></i><br>
-        <strong>1. Pantalla</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">La persona escribe o<br>toca el botón principal</span>
+      <div class="step-node cyan">
+        <i class="fa-solid fa-window-maximize" style="color:var(--secondary); font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>1. Pantalla</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">El usuario envía su consulta</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment amber">
-        <i class="fa-solid fa-user-lock" style="color:var(--accent); font-size:1.25rem; margin-bottom:0.35rem;"></i><br>
-        <strong>2. Login y Permisos</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Verifica quién es y<br>qué puede consultar</span>
+      <div class="step-node amber">
+        <i class="fa-solid fa-user-lock" style="color:var(--accent); font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>2. Login y Permisos</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Valida quién es y qué puede ver</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment primary">
-        <i class="fa-solid fa-brain" style="color:#d4baff; font-size:1.25rem; margin-bottom:0.35rem;"></i><br>
-        <strong>3. Agente de IA</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Procesa el pedido con<br>sus instrucciones y tools</span>
+      <div class="step-node primary">
+        <i class="fa-solid fa-brain" style="color:#d4baff; font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>3. Agente de IA</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Procesa con sus instrucciones</span>
       </div>
 
-      <span class="step-arrow fragment"><i class="fa-solid fa-arrow-right"></i></span>
+      <span class="step-arrow"><i class="fa-solid fa-arrow-right"></i></span>
 
-      <div class="step-node fragment green">
-        <i class="fa-solid fa-database" style="color:var(--green); font-size:1.25rem; margin-bottom:0.35rem;"></i><br>
-        <strong>4. Base de Datos</strong><br>
-        <span style="font-size:0.74rem; color:var(--text-muted);">Guarda o lee los datos<br>y devuelve la respuesta</span>
+      <div class="step-node green">
+        <i class="fa-solid fa-database" style="color:var(--green); font-size:1.3rem; margin-bottom:0.35rem;"></i>
+        <strong>4. Base de Datos</strong>
+        <span style="font-size:0.75rem; color:var(--text-muted); margin-top:0.2rem;">Guarda y devuelve su información</span>
       </div>
 
     </div>
 
-    <div class="highlight-box fragment cyan" style="max-width:1120px; margin:0 auto; font-size:0.9rem;">
-      <strong>🔍 En la demo en vivo:</strong> Seguimos una consulta desde la pantalla hasta el agente y la base de datos para ver cómo responde y dónde queda registrada.
+    <div class="highlight-box cyan" style="max-width:1120px;">
+      <strong>🎬 Demo en clase:</strong> Seguimos una consulta real desde la pantalla hasta el agente y la base de datos.
     </div>
 
   </section>
@@ -971,34 +1000,32 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
   <!-- Slide 5.2: Login, permisos y privacidad -->
   <section>
 
-    <span class="glass-pill"><i class="fa-solid fa-shield-halved"></i> SEGURIDAD Y CUENTAS DE USUARIO</span>
+    <span class="glass-pill"><i class="fa-solid fa-shield-halved"></i> CUENTAS DE USUARIO Y PRIVACIDAD</span>
 
-    <h2>Login y Permisos: <span class="text-gradient-amber">cuidar los datos de cada persona</span></h2>
+    <h2>Login vs. Permisos: <span class="text-gradient-amber">proteger los datos</span></h2>
 
-    <div class="grid-2" style="max-width:1140px; margin:1rem auto;">
+    <div class="grid-2" style="max-width:1120px; margin:1rem auto;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left;">
-        <h4 style="color:var(--secondary); font-size:1.05rem; margin-bottom:0.5rem;">
-          <i class="fa-solid fa-id-badge"></i> Login = Identificar a la persona
-        </h4>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Permite saber <strong>quién está usando la app</strong> (con su email, contraseña o cuenta de Google) para asociar sus consultas, su historial y su perfil.
+      <div class="glass-card" style="border-top:4px solid var(--secondary); text-align:left;">
+        <span class="badge-mini" style="color:var(--secondary); margin-bottom:0.5rem;">AUTENTICACIÓN</span>
+        <h3 style="font-size:1.3rem; margin-bottom:0.4rem;"><i class="fa-solid fa-id-badge" style="color:var(--secondary);"></i> Login = ¿Quién sos?</h3>
+        <p style="font-size:0.86rem; color:var(--text-muted); margin:0;">
+          Identifica a la persona (con email o Google) para que tenga su propia sesión e historial.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left;">
-        <h4 style="color:var(--accent); font-size:1.05rem; margin-bottom:0.5rem;">
-          <i class="fa-solid fa-lock"></i> Permisos = Qué puede ver o hacer
-        </h4>
-        <p style="font-size:0.88rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Define las reglas de acceso en la base de datos: <strong>cada persona debe acceder únicamente a los datos que le corresponden</strong> y nunca a la información privada de otros.
+      <div class="glass-card" style="border-top:4px solid var(--accent); text-align:left;">
+        <span class="badge-mini" style="color:#fcd34d; margin-bottom:0.5rem;">AUTORIZACIÓN</span>
+        <h3 style="font-size:1.3rem; margin-bottom:0.4rem;"><i class="fa-solid fa-lock" style="color:var(--accent);"></i> Permisos = ¿Qué podés ver?</h3>
+        <p style="font-size:0.86rem; color:var(--text-muted); margin:0;">
+          Asegura que <strong>cada persona acceda únicamente a los datos que le corresponden</strong>.
         </p>
       </div>
 
     </div>
 
-    <div class="highlight-box fragment red" style="max-width:1140px; margin:1rem auto 0; font-size:0.92rem;">
-      <strong>🛡️ Regla de privacidad innegociable:</strong> Que el login funcione no alcanza; la base de datos tiene que controlar quién puede leer o modificar cada registro para proteger la información privada de cada usuario.
+    <div class="highlight-box red" style="max-width:1120px;">
+      <strong>🛡️ Regla crítica:</strong> Toda app con cuentas de usuario debe controlar en la base de datos quién puede ver o modificar cada información privada.
     </div>
 
   </section>
@@ -1006,35 +1033,35 @@ dirigida a <span style="color:#fcd34d;">dueños de tiendas online</span> que qui
   <!-- Slide 5.3: Variables de entorno (.env) -->
   <section>
 
-    <span class="glass-pill cyan"><i class="fa-solid fa-key"></i> CONFIGURACIÓN · VARIABLES DE ENTORNO</span>
+    <span class="glass-pill cyan"><i class="fa-solid fa-key"></i> CONFIGURACIÓN SEGURA</span>
 
-    <h2>Variables de entorno (<code>.env</code>): <span class="text-gradient">dónde van las llaves</span></h2>
+    <h2>Variables de entorno (<code>.env</code>): <span class="text-gradient">dónde van las claves</span></h2>
 
-    <p style="font-size:0.98rem; color:var(--text-muted); max-width:940px; margin:0 auto 1rem;">
-      Son la configuración privada del proyecto: direcciones de conexión y claves secretas (API Keys del agente o de la base de datos).
+    <p style="font-size:0.94rem; color:var(--text-muted); margin:0 auto 0.9rem;">
+      Guardan las direcciones y claves secretas para conectar tu app con el agente y la base de datos:
     </p>
 
-    <div class="grid-2" style="max-width:1140px; margin:0 auto;">
+    <div class="grid-2" style="max-width:1120px; margin:0 auto;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--red); text-align:left;">
-        <h4 style="color:#fca5a5; font-size:1rem; margin-bottom:0.5rem;">
-          <i class="fa-solid fa-xmark"></i> Lo que NUNCA se hace
+      <div class="glass-card" style="border-top:4px solid var(--red); text-align:left;">
+        <h4 style="color:#fca5a5; font-size:1rem; margin-bottom:0.4rem;">
+          <i class="fa-solid fa-xmark"></i> Nunca en el código de GitHub
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0 0 0.7rem; line-height:1.45;">
-          Pegar tus claves secretas adentro del código que subís a GitHub. Si el repositorio es compartido o público, cualquiera puede ver y usar tus credenciales.
+        <p style="font-size:0.83rem; color:var(--text-muted); margin:0 0 0.65rem;">
+          Si subís una clave escrita en el archivo, queda expuesta a cualquiera que abra el repositorio.
         </p>
-        <pre class="glass-code" style="font-size:0.75rem; border-color:rgba(239,68,68,0.3); padding:0.7rem 1rem;"><span style="color:#fca5a5;">// ❌ MAL: clave expuesta en el archivo</span>
-const apiKey = "sk-proj-987654321secreto";</pre>
+        <pre class="glass-code" style="font-size:0.74rem; border-color:rgba(239,68,68,0.3); padding:0.65rem 0.9rem;"><span style="color:#fca5a5;">// ❌ MAL: clave pegada en el código</span>
+const apiKey = "sk-proj-987654secreto";</pre>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--green); text-align:left;">
-        <h4 style="color:#86efac; font-size:1rem; margin-bottom:0.5rem;">
-          <i class="fa-solid fa-check"></i> Cómo se configura bien en Vercel
+      <div class="glass-card" style="border-top:4px solid var(--green); text-align:left;">
+        <h4 style="color:#86efac; font-size:1rem; margin-bottom:0.4rem;">
+          <i class="fa-solid fa-check"></i> En el panel de Vercel (<code>Environment Variables</code>)
         </h4>
-        <p style="font-size:0.86rem; color:var(--text-muted); margin:0 0 0.7rem; line-height:1.45;">
-          Las claves se cargan en <strong>Vercel → Settings → Environment Variables</strong>. El código solo pide la variable por su nombre y las llaves quedan protegidas.
+        <p style="font-size:0.83rem; color:var(--text-muted); margin:0 0 0.65rem;">
+          Se cargan en <strong>Settings → Environment Variables</strong>. El código las usa sin mostrar el valor.
         </p>
-        <pre class="glass-code" style="font-size:0.75rem; border-color:rgba(34,197,94,0.3); padding:0.7rem 1rem;"><span style="color:#86efac;">// ✅ BIEN: lee de la configuración segura</span>
+        <pre class="glass-code" style="font-size:0.74rem; border-color:rgba(34,197,94,0.3); padding:0.65rem 0.9rem;"><span style="color:#86efac;">// ✅ BIEN: lee la variable segura</span>
 const apiKey = process.env.OPENAI_API_KEY;</pre>
       </div>
 
@@ -1055,78 +1082,85 @@ const apiKey = process.env.OPENAI_API_KEY;</pre>
 
     <span class="glass-pill green"><i class="fa-solid fa-mobile-screen"></i> MÓDULO 4 · PROBAR Y ENTREGAR</span>
 
-    <h2>Que se vea bien <span class="text-gradient-amber">no alcanza</span>: hay que probarla</h2>
+    <h2>Que se vea bien <span class="text-gradient-amber">no alcanza</span>: probala en celular</h2>
 
-    <p style="font-size:1rem; color:var(--text-muted); max-width:920px; margin:0 auto 1.1rem;">
-      Una app puede lucir impecable en tu monitor y fallar cuando alguien intenta usarla desde el teléfono.
-    </p>
+    <div class="grid-3" style="max-width:1120px; margin:1rem auto 0.9rem;">
 
-    <div class="grid-3" style="max-width:1150px; margin:0 auto;">
-
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left;">
-        <h4 style="color:var(--secondary); font-size:1rem; margin-bottom:0.45rem;">
-          <i class="fa-solid fa-mobile-screen-button"></i> 1. Abrir en el celular
-        </h4>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Comprobá que los textos se lean sin hacer zoom, que nada quede cortado y que el botón principal sea fácil de tocar.
+      <div class="glass-card" style="border-top:4px solid var(--secondary); text-align:left;">
+        <span class="badge-mini" style="color:var(--secondary); margin-bottom:0.5rem;">1. PANTALLA MÓVIL</span>
+        <h4 style="font-size:1.05rem;">Abrí la URL en tu celular</h4>
+        <p style="font-size:0.83rem; color:var(--text-muted); margin:0;">
+          Verificá que el texto sea legible y que el botón principal quede cómodo al pulgar.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left;">
-        <h4 style="color:var(--accent); font-size:1rem; margin-bottom:0.45rem;">
-          <i class="fa-solid fa-hand-pointer"></i> 2. Usar la acción principal
-        </h4>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Probá los botones, completá el formulario de punta a punta y verificá que el cambio o respuesta funcione de verdad.
+      <div class="glass-card" style="border-top:4px solid var(--accent); text-align:left;">
+        <span class="badge-mini" style="color:#fcd34d; margin-bottom:0.5rem;">2. INTERACCIÓN</span>
+        <h4 style="font-size:1.05rem;">Usá la acción principal</h4>
+        <p style="font-size:0.83rem; color:var(--text-muted); margin:0;">
+          Tocá los botones, enviá el formulario y comprobá que responda sin errores.
         </p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--green); text-align:left;">
-        <h4 style="color:var(--green); font-size:1rem; margin-bottom:0.45rem;">
-          <i class="fa-solid fa-user-group"></i> 3. Prueba con un compañero
-        </h4>
-        <p style="font-size:0.85rem; color:var(--text-muted); margin:0; line-height:1.5;">
-          Compartile tu enlace de Vercel a un compañero para que lo pruebe desde su celular y te diga si se entiende qué hace.
+      <div class="glass-card" style="border-top:4px solid var(--green); text-align:left;">
+        <span class="badge-mini" style="color:#86efac; margin-bottom:0.5rem;">3. MIRADA EXTERNA</span>
+        <h4 style="font-size:1.05rem;">Pedile a un compañero</h4>
+        <p style="font-size:0.83rem; color:var(--text-muted); margin:0;">
+          Pasale tu link sin explicarle nada: si entiende qué hacer en 5 segundos, funciona.
         </p>
       </div>
 
     </div>
 
+    <div class="highlight-box amber" style="max-width:1120px;">
+      <strong>📦 Entregable de la práctica:</strong> Repositorio en GitHub + Enlace en Vercel + Captura del cambio + Resultado de la prueba en celular.
+    </div>
+
   </section>
 
-  <!-- Slide 6.2: Las 6 preguntas + Entregable -->
+  <!-- Slide 6.2: Las 6 preguntas de chequeo -->
   <section>
 
-    <span class="glass-pill cyan"><i class="fa-solid fa-clipboard-check"></i> CHECKLIST Y ENTREGA</span>
+    <span class="glass-pill cyan"><i class="fa-solid fa-clipboard-check"></i> CHECKLIST DEL PROYECTO</span>
 
     <h2>Las 6 preguntas para <span class="text-gradient">repetirlo en tu proyecto</span></h2>
 
-    <div class="grid-2" style="max-width:1150px; margin:0.9rem auto;">
+    <div class="grid-3" style="max-width:1120px; margin:0.9rem auto 0; text-align:left;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--primary); text-align:left;">
-        <h4 style="color:#d4baff; margin-bottom:0.7rem; font-size:1.02rem;">
-          <i class="fa-solid fa-circle-question"></i> Checklist antes de dar por lista tu app
-        </h4>
-        <ul class="premium-list" style="font-size:0.86rem;">
-          <li><i class="fa-solid fa-1"></i> ¿Quién lo usa y qué necesidad resuelve?</li>
-          <li><i class="fa-solid fa-2"></i> ¿Qué herramientas de IA convienen según el caso?</li>
-          <li><i class="fa-solid fa-3"></i> ¿Dónde se guarda la versión del proyecto (GitHub)?</li>
-          <li><i class="fa-solid fa-4"></i> ¿Cuál es el enlace publicado en vivo (Vercel)?</li>
-          <li><i class="fa-solid fa-5"></i> ¿Funciona la acción principal desde el celular?</li>
-          <li><i class="fa-solid fa-6"></i> ¿Qué datos guarda y quién tiene permiso para acceder?</li>
-        </ul>
+      <div class="glass-card" style="border-top:3px solid var(--primary); padding:1rem 1.25rem;">
+        <span class="manifesto-num">01</span>
+        <h4 style="font-size:0.98rem; margin:0.2rem 0;">Usuario y problema</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">¿Quién lo usa y qué necesidad puntual resuelve?</p>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--green); text-align:left;">
-        <h4 style="color:var(--green); margin-bottom:0.7rem; font-size:1.02rem;">
-          <i class="fa-solid fa-box-open"></i> Entrega de la práctica de hoy
-        </h4>
-        <ul class="premium-list" style="font-size:0.86rem;">
-          <li><i class="fa-brands fa-github" style="color:var(--green);"></i> <strong>Repositorio en GitHub:</strong> con la versión personalizada guardada.</li>
-          <li><i class="fa-solid fa-link" style="color:var(--green);"></i> <strong>Enlace en Vercel:</strong> URL pública activa y accesible.</li>
-          <li><i class="fa-solid fa-camera" style="color:var(--green);"></i> <strong>Captura del cambio:</strong> mostrando el nuevo título y la acción principal.</li>
-          <li><i class="fa-solid fa-mobile-screen" style="color:var(--green);"></i> <strong>Resultado de las pruebas:</strong> validación en celular junto a un compañero.</li>
-        </ul>
+      <div class="glass-card" style="border-top:3px solid var(--secondary); padding:1rem 1.25rem;">
+        <span class="manifesto-num">02</span>
+        <h4 style="font-size:0.98rem; margin:0.2rem 0;">Herramientas de IA</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">¿Qué herramienta o combinación conviene usar?</p>
+      </div>
+
+      <div class="glass-card" style="border-top:3px solid var(--accent); padding:1rem 1.25rem;">
+        <span class="manifesto-num">03</span>
+        <h4 style="font-size:0.98rem; margin:0.2rem 0;">Control de versiones</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">¿Dónde se guarda la versión oficial (GitHub)?</p>
+      </div>
+
+      <div class="glass-card" style="border-top:3px solid var(--green); padding:1rem 1.25rem;">
+        <span class="manifesto-num">04</span>
+        <h4 style="font-size:0.98rem; margin:0.2rem 0;">Enlace en vivo</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">¿Cuál es la URL publicada en Vercel?</p>
+      </div>
+
+      <div class="glass-card" style="border-top:3px solid var(--secondary); padding:1rem 1.25rem;">
+        <span class="manifesto-num">05</span>
+        <h4 style="font-size:0.98rem; margin:0.2rem 0;">Prueba móvil</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">¿Funciona la acción principal desde el celular?</p>
+      </div>
+
+      <div class="glass-card" style="border-top:3px solid var(--primary); padding:1rem 1.25rem;">
+        <span class="manifesto-num">06</span>
+        <h4 style="font-size:0.98rem; margin:0.2rem 0;">Datos y privacidad</h4>
+        <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">¿Qué datos guarda y quién tiene permiso de acceso?</p>
       </div>
 
     </div>
@@ -1193,7 +1227,7 @@ const apiKey = process.env.OPENAI_API_KEY;</pre>
         <span class="manifesto-num">07</span>
         <div>
           <span class="manifesto-title">Radio de impacto mínimo</span>
-          <span class="manifesto-phrase">Permisos acotados por usuario, variables en <code>.env</code> y vista previa antes de producción.</span>
+          <span class="manifesto-phrase">Permisos acotados por usuario, claves en <code>.env</code> y vista previa antes de producción.</span>
         </div>
       </div>
 
@@ -1211,42 +1245,42 @@ const apiKey = process.env.OPENAI_API_KEY;</pre>
   <!-- Slide 6.4: Evaluación en vivo (5 Verdadero / Falso) -->
   <section>
 
-    <span class="glass-pill amber"><i class="fa-solid fa-graduation-cap"></i> EVALUACIÓN DE CIERRE</span>
+    <span class="glass-pill amber"><i class="fa-solid fa-graduation-cap"></i> AUTOEVALUACIÓN EN VIVO</span>
 
-    <h2>Repaso rápido: ¿Verdadero o <span class="text-gradient-amber">Falso</span>?</h2>
+    <h2>¿Verdadero o <span class="text-gradient-amber">Falso</span>?</h2>
 
-    <div style="max-width:1160px; margin:0.8rem auto;">
+    <div style="max-width:1150px; margin:0.7rem auto;">
 
-      <table style="font-size:0.82rem;">
+      <table>
         <tr>
-          <th style="width:52%;">Afirmación</th>
+          <th style="width:54%;">Afirmación</th>
           <th style="width:13%; text-align:center;">Respuesta</th>
-          <th>Por qué</th>
+          <th>Idea clave</th>
         </tr>
-        <tr class="fragment fade-up">
-          <td><strong>1.</strong> Un proyecto en GitHub puede ser colaborativo e incluir agentes que realicen tareas de forma periódica.</td>
-          <td style="text-align:center;"><span class="glass-pill green" style="margin:0; font-size:0.68rem;">VERDADERO</span></td>
-          <td style="color:var(--text-muted);">Varias personas pueden colaborar y se pueden configurar rutinas automáticas (Claude Code, GitHub Actions, n8n o Make).</td>
+        <tr>
+          <td><strong>1.</strong> Un proyecto en GitHub puede ser colaborativo e incluir agentes con tareas periódicas.</td>
+          <td style="text-align:center;"><span class="glass-pill green fragment" style="margin:0; font-size:0.68rem;">VERDADERO</span></td>
+          <td style="color:var(--text-muted);"><span class="fragment">Colaboran personas y rutinas de agentes (Claude Code, Actions, n8n, Make).</span></td>
         </tr>
-        <tr class="fragment fade-up">
-          <td><strong>2.</strong> Para crear el front end y el back end de una app, conviene elegir las herramientas según las necesidades del proyecto.</td>
-          <td style="text-align:center;"><span class="glass-pill green" style="margin:0; font-size:0.68rem;">VERDADERO</span></td>
-          <td style="color:var(--text-muted);">Primero definimos si necesita pantallas, datos o usuarios, y luego elegimos o combinamos (Claude Code, Antigravity, Lovable, v0, Codex, Gemini Canvas).</td>
+        <tr>
+          <td><strong>2.</strong> Para crear el front end y el back end conviene elegir las herramientas según el proyecto.</td>
+          <td style="text-align:center;"><span class="glass-pill green fragment" style="margin:0; font-size:0.68rem;">VERDADERO</span></td>
+          <td style="color:var(--text-muted);"><span class="fragment">Definimos si requiere pantallas, datos o usuarios y combinamos herramientas.</span></td>
         </tr>
-        <tr class="fragment fade-up">
+        <tr>
           <td><strong>3.</strong> Que una app se vea bien alcanza para saber que funciona correctamente.</td>
-          <td style="text-align:center;"><span class="glass-pill red" style="margin:0; font-size:0.68rem;">FALSO</span></td>
-          <td style="color:var(--text-muted);">También hay que probar sus botones, formularios y acciones principales, incluyendo cómo se usa desde el celular.</td>
+          <td style="text-align:center;"><span class="glass-pill red fragment" style="margin:0; font-size:0.68rem;">FALSO</span></td>
+          <td style="color:var(--text-muted);"><span class="fragment">Hay que probar botones, formularios y la acción principal desde el celular.</span></td>
         </tr>
-        <tr class="fragment fade-up">
-          <td><strong>4.</strong> Una app con cuentas de usuario debe cuidar que cada persona acceda solo a los datos que le corresponden.</td>
-          <td style="text-align:center;"><span class="glass-pill green" style="margin:0; font-size:0.68rem;">VERDADERO</span></td>
-          <td style="color:var(--text-muted);">La app debe proteger la información privada y controlar con permisos quién puede verla o modificarla.</td>
+        <tr>
+          <td><strong>4.</strong> Una app con cuentas debe cuidar que cada persona acceda solo a sus propios datos.</td>
+          <td style="text-align:center;"><span class="glass-pill green fragment" style="margin:0; font-size:0.68rem;">VERDADERO</span></td>
+          <td style="color:var(--text-muted);"><span class="fragment">Login identifica quién sos; permisos protegen la privacidad de cada cuenta.</span></td>
         </tr>
-        <tr class="fragment fade-up">
+        <tr>
           <td><strong>5.</strong> Para que una app sea útil, alcanza con agregar muchas funciones.</td>
-          <td style="text-align:center;"><span class="glass-pill red" style="margin:0; font-size:0.68rem;">FALSO</span></td>
-          <td style="color:var(--text-muted);">Lo principal es que resuelva una necesidad real y sea fácil de usar: definir quién la usa, qué necesita y cuál es la acción principal.</td>
+          <td style="text-align:center;"><span class="glass-pill red fragment" style="margin:0; font-size:0.68rem;">FALSO</span></td>
+          <td style="color:var(--text-muted);"><span class="fragment">Importa que resuelva una necesidad clara con una acción principal simple.</span></td>
         </tr>
       </table>
 
@@ -1257,56 +1291,56 @@ const apiKey = process.env.OPENAI_API_KEY;</pre>
   <!-- Slide 6.5: Recursos de la clase -->
   <section>
 
-    <span class="glass-pill green"><i class="fa-solid fa-book-open"></i> RECURSOS · CLASE 5</span>
+    <span class="glass-pill green"><i class="fa-solid fa-book-open"></i> CAJA DE HERRAMIENTAS · CLASE 5</span>
 
-    <h2>Materiales para <span class="text-gradient">seguir practicando</span></h2>
+    <h2>Recursos para <span class="text-gradient">seguir construyendo</span></h2>
 
-    <div class="grid-3" style="max-width:1150px; margin:0.7rem auto;">
+    <div class="grid-3" style="max-width:1140px; margin:0.7rem auto;">
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--secondary); text-align:left; margin:0;">
-        <h4 style="color:var(--secondary); font-size:0.98rem; margin-bottom:0.55rem;">
-          <i class="fa-solid fa-wand-magic-sparkles"></i> 1. Pantallas y Prototipos
+      <div class="glass-card" style="border-top:4px solid var(--secondary); text-align:left;">
+        <h4 style="color:var(--secondary); font-size:0.96rem; margin-bottom:0.55rem;">
+          <i class="fa-solid fa-wand-magic-sparkles"></i> 1. Pantallas y Apps Visuales
         </h4>
-        <ul class="premium-list" style="font-size:0.82rem;">
-          <li><i class="fa-solid fa-bolt"></i> <a href="https://v0.dev/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>v0.dev ↗</strong></a> — interfaces y componentes en segundos.</li>
-          <li><i class="fa-solid fa-heart"></i> <a href="https://lovable.dev/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Lovable ↗</strong></a> — apps completas con login y base de datos.</li>
-          <li><i class="fa-solid fa-palette"></i> <a href="https://gemini.google.com/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Gemini Canvas ↗</strong></a> — prototipado interactivo rápido.</li>
+        <ul class="premium-list" style="font-size:0.81rem;">
+          <li><i class="fa-solid fa-bolt"></i> <a href="https://v0.dev/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>v0.dev ↗</strong></a> — interfaces en segundos.</li>
+          <li><i class="fa-solid fa-heart"></i> <a href="https://lovable.dev/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Lovable ↗</strong></a> — app + login + datos.</li>
+          <li><i class="fa-solid fa-palette"></i> <a href="https://gemini.google.com/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Gemini Canvas ↗</strong></a> — prototipos rápidos.</li>
         </ul>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--primary); text-align:left; margin:0;">
-        <h4 style="color:#d4baff; font-size:0.98rem; margin-bottom:0.55rem;">
-          <i class="fa-solid fa-terminal"></i> 2. Construcción con Agentes
+      <div class="glass-card" style="border-top:4px solid var(--primary); text-align:left;">
+        <h4 style="color:#d4baff; font-size:0.96rem; margin-bottom:0.55rem;">
+          <i class="fa-solid fa-terminal"></i> 2. Agentes sobre tu Proyecto
         </h4>
-        <ul class="premium-list" style="font-size:0.82rem;">
-          <li><i class="fa-solid fa-terminal"></i> <a href="https://claude.ai/code" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Claude Code ↗</strong></a> — desarrollo agéntico + rutinas en la nube.</li>
-          <li><i class="fa-solid fa-rocket"></i> <a href="https://antigravity.google/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Antigravity ↗</strong></a> — entorno agent-first con navegador integrado.</li>
-          <li><i class="fa-solid fa-cloud"></i> <a href="https://chatgpt.com/codex" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>ChatGPT / Codex ↗</strong></a> — tareas en paralelo sobre tu repo.</li>
+        <ul class="premium-list" style="font-size:0.81rem;">
+          <li><i class="fa-solid fa-terminal"></i> <a href="https://claude.ai/code" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Claude Code ↗</strong></a> — desktop, web y rutinas.</li>
+          <li><i class="fa-solid fa-rocket"></i> <a href="https://antigravity.google/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Antigravity ↗</strong></a> — IDE agéntico + browser.</li>
+          <li><i class="fa-solid fa-cloud"></i> <a href="https://chatgpt.com/codex" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>ChatGPT / Codex ↗</strong></a> — agentes en la nube.</li>
         </ul>
       </div>
 
-      <div class="glass-card fragment" style="border-top:4px solid var(--accent); text-align:left; margin:0;">
-        <h4 style="color:var(--accent); font-size:0.98rem; margin-bottom:0.55rem;">
-          <i class="fa-solid fa-cloud-arrow-up"></i> 3. Repositorio, Deploy y Lecturas
+      <div class="glass-card" style="border-top:4px solid var(--accent); text-align:left;">
+        <h4 style="color:var(--accent); font-size:0.96rem; margin-bottom:0.55rem;">
+          <i class="fa-solid fa-cloud-arrow-up"></i> 3. Deploy y Lecturas
         </h4>
-        <ul class="premium-list" style="font-size:0.82rem;">
-          <li><i class="fa-brands fa-github" style="color:var(--accent);"></i> <a href="https://docs.github.com/es/get-started" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Guía de GitHub (ES) ↗</strong></a> + <a href="https://vercel.com/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Vercel ↗</strong></a></li>
-          <li><i class="fa-solid fa-newspaper" style="color:var(--accent);"></i> <a href="https://www.anthropic.com/news/artifacts" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Anthropic Artifacts ↗</strong></a> — de una idea a una app interactiva (3 min).</li>
-          <li><i class="fa-solid fa-flask" style="color:var(--accent);"></i> <a href="https://a13i-lab.vercel.app" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>a13i-lab.vercel.app ↗</strong></a> — laboratorio de productos con IA.</li>
+        <ul class="premium-list" style="font-size:0.81rem;">
+          <li><i class="fa-brands fa-github" style="color:var(--accent);"></i> <a href="https://docs.github.com/es/get-started" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Guía GitHub (ES) ↗</strong></a> + <a href="https://vercel.com/" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Vercel ↗</strong></a></li>
+          <li><i class="fa-solid fa-newspaper" style="color:var(--accent);"></i> <a href="https://www.anthropic.com/news/artifacts" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>Anthropic Artifacts ↗</strong></a> — lectura 3 min.</li>
+          <li><i class="fa-solid fa-flask" style="color:var(--accent);"></i> <a href="https://a13i-lab.vercel.app" target="_blank" style="color:var(--text-main); text-decoration:underline;"><strong>a13i-lab.vercel.app ↗</strong></a> — laboratorio IA.</li>
         </ul>
       </div>
 
     </div>
 
-    <div class="highlight-box red fragment" style="max-width:1150px; margin:0.9rem auto 0; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
-      <div style="font-size:0.88rem;">
+    <div class="highlight-box red" style="max-width:1140px; margin-top:0.85rem; display:flex; align-items:center; justify-content:space-between; gap:1rem;">
+      <div>
         <i class="fa-brands fa-youtube" style="color:#ef4444; margin-right:0.4rem;"></i>
-        <strong>Video paso a paso (Axel Laban):</strong> <em>"Tu primera App con IA en 15 minutos"</em> — cómo conectar <strong>Claude Code con GitHub y Vercel</strong> y publicar gratis.
+        <strong>Video paso a paso (Axel Laban):</strong> <em>"Tu primera App con IA en 15 minutos"</em> — Claude Code + GitHub + Vercel.
       </div>
-      <a href="https://youtu.be/_VuCJDGaV5w?si=jR_13nn6ht0q7NXp" target="_blank" style="color:#fecdd3; border:1px solid rgba(244,63,94,0.5); background:rgba(244,63,94,0.16); text-decoration:none; flex-shrink:0; padding:0.4rem 0.9rem; border-radius:8px; font-size:0.8rem; font-weight:700;">Ver en YouTube ↗</a>
+      <a href="https://youtu.be/_VuCJDGaV5w?si=jR_13nn6ht0q7NXp" target="_blank" class="badge-mini" style="color:#fecdd3; border-color:rgba(244,63,94,0.5); background:rgba(244,63,94,0.16); text-decoration:none; flex-shrink:0; padding:0.35rem 0.85rem;">Ver en YouTube ↗</a>
     </div>
 
-    <p style="font-size:0.88rem; color:var(--secondary); margin-top:1rem;">
+    <p style="font-size:0.86rem; color:var(--secondary); margin-top:0.95rem;">
       Axel Laban Arzubi · <a href="https://www.linkedin.com/in/arzubilaban/?locale=en" target="_blank" style="color:var(--secondary); text-decoration:underline;">LinkedIn</a> · <a href="https://www.youtube.com/@soyaxellaban" target="_blank" style="color:var(--secondary); text-decoration:underline;">@soyaxellaban</a> · Programa de Agentes de IA · Clase 5
     </p>
 
